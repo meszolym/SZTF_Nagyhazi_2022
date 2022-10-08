@@ -21,13 +21,11 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             path += Console.ReadLine();
 
             InputReader inputReader = new InputReader(path);
-            Game game = inputReader.RunRead(ref writer);
+            Game game = inputReader.ReadGame(ref writer);
             writer.WriteSuccessfulRead();
 
             game.Run(ref writer);
 
-            string winner = game.GetWinner();
-            writer.AnnounceWinner(winner);
             Environment.Exit(0);
 
         }

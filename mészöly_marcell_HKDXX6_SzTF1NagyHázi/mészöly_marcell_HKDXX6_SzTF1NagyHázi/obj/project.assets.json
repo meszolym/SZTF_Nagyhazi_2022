@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\OneDrive - Óbudai egyetem\\mészöly_marcell_HKDXX6_SzTF1NagyHázi\\mészöly_marcell_HKDXX6_SzTF1NagyHázi\\mészöly_marcell_HKDXX6_SzTF1NagyHázi.csproj",
+      "projectUniqueName": "D:\\GITHUB\\SZTF_Nagyhazi_2022\\mészöly_marcell_HKDXX6_SzTF1NagyHázi\\mészöly_marcell_HKDXX6_SzTF1NagyHázi\\mészöly_marcell_HKDXX6_SzTF1NagyHázi.csproj",
       "projectName": "mészöly_marcell_HKDXX6_SzTF1NagyHázi",
-      "projectPath": "D:\\OneDrive - Óbudai egyetem\\mészöly_marcell_HKDXX6_SzTF1NagyHázi\\mészöly_marcell_HKDXX6_SzTF1NagyHázi\\mészöly_marcell_HKDXX6_SzTF1NagyHázi.csproj",
+      "projectPath": "D:\\GITHUB\\SZTF_Nagyhazi_2022\\mészöly_marcell_HKDXX6_SzTF1NagyHázi\\mészöly_marcell_HKDXX6_SzTF1NagyHázi\\mészöly_marcell_HKDXX6_SzTF1NagyHázi.csproj",
       "packagesPath": "C:\\Users\\Marc\\.nuget\\packages\\",
-      "outputPath": "D:\\OneDrive - Óbudai egyetem\\mészöly_marcell_HKDXX6_SzTF1NagyHázi\\mészöly_marcell_HKDXX6_SzTF1NagyHázi\\obj\\",
+      "outputPath": "D:\\GITHUB\\SZTF_Nagyhazi_2022\\mészöly_marcell_HKDXX6_SzTF1NagyHázi\\mészöly_marcell_HKDXX6_SzTF1NagyHázi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

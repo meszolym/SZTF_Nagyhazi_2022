@@ -44,20 +44,122 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             Console.ReadKey();
             Console.Clear();
         }
-
+        /// <summary>
+        /// Bejelenti a győztest.
+        /// </summary>
+        /// <param name="winner">A győztes neve</param>
         internal void AnnounceWinner(string winner)
         {
-            Console.Clear();
-            WriteHeader();
             Console.WriteLine($"A győztes: {winner}");
             Console.WriteLine("A program bezárásához nyomd meg bármely gombot");
             Console.ReadKey();
         }
-
-        internal void WriteHeader()
+        /// <summary>
+        /// Kiírja egy adott játékos státuszát
+        /// </summary>
+        /// <param name="playerName">Játékos "neve"</param>
+        /// <param name="playerMoney">Játékos pénzösszege</param>
+        internal void WritePlayerStatus(string playerName, string playerMoney)
         {
-            WriteBoard();
-            WriteCurrentGameStatus();
+            Console.WriteLine($"{playerName}: {playerMoney}");
         }
+        /// <summary>
+        /// Kiír egy elválasztót
+        /// </summary>
+        internal void WriteDivider()
+        {
+            Console.WriteLine("---");
+        }
+
+        /// <summary>
+        /// Kiírja a játékos lépés előtti státuszát, a mező tulajdonságaival együtt, amin áll.
+        /// </summary>
+        /// <param name="fieldName">A mező "neve"</param>
+        /// <param name="ownerName">A mező birtokosának "neve"</param>
+        /// <param name="priceString">A mező ára</param>
+        internal void PlacementBeforeRoll(string fieldName, string ownerName, string priceString)
+        {
+            Console.WriteLine($"📍 Aktuális mező, ahol állsz: {fieldName}");
+            Console.WriteLine($"📈 Ára: {priceString}");
+            Console.WriteLine($"🧑 Birtokosa: {ownerName}");
+            Console.WriteLine("🎲 Dobáshoz nyomd meg bármely gombot.");
+        }
+        /// <summary>
+        /// Kiírja a játékos lépés előtti státuszát, a mező tulajdonságai nélkül, amin áll.
+        /// </summary>
+        /// <param name="fieldName">A mező "neve"</param>
+        internal void PlacementBeforeRoll(string fieldName)
+        {
+            Console.WriteLine($"📍 Aktuális mező, ahol állsz: {fieldName}");
+            Console.WriteLine("🎲 Dobáshoz nyomd meg bármely gombot.");
+        }
+        /// <summary>
+        /// Tájékoztatja a játékost, hogy át-/rálépett a startmezőn/-re, illetve a jutalmáról.
+        /// </summary>
+        /// <param name="prize">Az átlépés jutalma</param>
+        internal void WriteCrossedStart(string prize)
+        {
+            Console.WriteLine($"🤑 Át-/ráléptél a start mezőn/-re így jutalmad: {prize}");
+        }
+        /// <summary>
+        /// Kiírja a mezőt, a megadott tulajdonossal.
+        /// </summary>
+        /// <param name="topRow">Az első kiírandó sora a mezőnek (Field.GetTop())</param>
+        /// <param name="tag">A mező tag-je (Field.GetTag())</param>
+        /// <param name="tagBgColor">A tag háttérszíne (Player.BgColor)</param>
+        /// <param name="tagFgColor">A tag szövegszíne (Player.FgColor)</param>
+        /// <param name="left">A konzol bal oldalától való távolság</param>
+        /// <param name="top">A konzol tetejétől való távolság</param>
+
+        internal void WriteFieldWithOwner(string topRow, string tag, ConsoleColor tagBgColor, ConsoleColor tagFgColor, int left, int top)
+        {
+            Console.SetCursorPosition(left, top);
+            Console.Write(topRow);
+            Console.BackgroundColor = tagBgColor;
+            Console.ForegroundColor = tagFgColor;
+            Console.Write(tag);
+            Console.ResetColor();
+            Console.SetCursorPosition(left, top + 1);
+            Console.Write("|      |");
+            Console.SetCursorPosition(left, top + 2);
+            Console.Write("└──────┘");
+        }
+
+
+        /// <summary>
+        /// Kiírja a tulajdonos nélküli mezőt
+        /// </summary>
+        /// <param name="topRow">Az első kiírandó sora a mezőnek (Field.GetTop())</param>
+        /// <param name="tag">A mező tag-je (Field.GetTag())</param>
+        /// <param name="left">A konzol bal oldalától való távolság</param>
+        /// <param name="top">A konzol tetejétől való távolság</param>
+        internal void WriteFieldNoOwner(string topRow, string tag, int left, int top)
+        {
+            Console.SetCursorPosition(left, top);
+            Console.Write(topRow);
+            Console.Write(tag);
+            Console.SetCursorPosition(left, top+1);
+            Console.Write("|      |");
+            Console.SetCursorPosition(left, top + 2);
+            Console.Write("└──────┘");
+
+        }
+        /// <summary>
+        /// Kiírja a mezőn álló egyik játékost.
+        /// </summary>
+        /// <param name="num">A játékos száma (id+1)</param>
+        /// <param name="left">A konzol bal oldalától való távolság, ahova írhatjuk a játékos számát (A mezőhöz képest +2+ahányadik játékost írjuk)</param>
+        /// <param name="top">A konzol tetejétől való távolság (A mezőhöz képest +1)</param>
+        /// <param name="BgColor">A játékos háttérszíne</param>
+        /// <param name="FgColor">A játékos szövegszíne</param>
+        internal void WritePlayerOnField(string num, int left, int top, ConsoleColor BgColor, ConsoleColor FgColor)
+        {
+            Console.SetCursorPosition(left, top);
+            Console.BackgroundColor = BgColor;
+            Console.ForegroundColor = FgColor;
+            Console.Write(num);
+            Console.ResetColor();
+        }
+
     }
 }
