@@ -11,7 +11,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <summary>
         /// Kiírja az üdvözlést
         /// </summary>
-        internal void WriteWelcome()
+        internal static void WriteWelcome()
         {
             Console.WriteLine("Üdv az SzTF Monopolyban!");
             Console.WriteLine("A legjobb játékélmény (és a helyes megjelenítés) érdekében, kérlek, teljes képernyőn jelenítsd meg a konzolt!");
@@ -19,7 +19,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <summary>
         /// Tájékoztatja a felhasználót a kiinduló fájl bekéréséről.
         /// </summary>
-        internal void AskForPath()
+        internal static void AskForPath()
         {
             Console.Write("Tedd a kiinduló fájlt a \"Source\" mappába, és itt add meg a nevét (kiterjesztéssel!): ");
         }
@@ -28,7 +28,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// Tájékoztatja a felhasználót a kialakult hibáról.
         /// </summary>
         /// <param name="errorDesc">Hiba leírása</param>
-        internal void WriteError(string errorDesc)
+        internal static void WriteError(string errorDesc)
         {
             Console.WriteLine($"Hiba: {errorDesc}");
             Console.WriteLine("A program bezárásához nyomd meg bármely gombot");
@@ -37,7 +37,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <summary>
         /// Tájékoztatja a felhasználót a beolvasás sikerességéről.
         /// </summary>
-        internal void WriteSuccessfulRead()
+        internal static void WriteSuccessfulRead()
         {
             Console.WriteLine("---");
             Console.WriteLine("Sikeres beolvasás! A továbblépéshez nyomd meg bármely gombot.");
@@ -48,7 +48,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// Bejelenti a győztest.
         /// </summary>
         /// <param name="winner">A győztes neve</param>
-        internal void AnnounceWinner(string winner)
+        internal static void AnnounceWinner(string winner)
         {
             Console.WriteLine($"A győztes: {winner}");
             Console.WriteLine("A program bezárásához nyomd meg bármely gombot");
@@ -59,14 +59,14 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// </summary>
         /// <param name="playerName">Játékos "neve"</param>
         /// <param name="playerMoney">Játékos pénzösszege</param>
-        internal void WritePlayerStatus(string playerName, string playerMoney)
+        internal static void WritePlayerStatus(string playerName, string playerMoney)
         {
             Console.WriteLine($"{playerName}: {playerMoney}");
         }
         /// <summary>
         /// Kiír egy elválasztót
         /// </summary>
-        internal void WriteDivider()
+        internal static void WriteDivider()
         {
             Console.WriteLine("---");
         }
@@ -77,7 +77,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <param name="fieldName">A mező "neve"</param>
         /// <param name="ownerName">A mező birtokosának "neve"</param>
         /// <param name="priceString">A mező ára</param>
-        internal void PlacementBeforeRoll(string fieldName, string ownerName, string priceString)
+        internal static void PlacementBeforeRoll(string fieldName, string ownerName, string priceString)
         {
             Console.WriteLine($"📍 Aktuális mező, ahol állsz: {fieldName}");
             Console.WriteLine($"📈 Ára: {priceString}");
@@ -88,7 +88,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// Kiírja a játékos lépés előtti státuszát, a mező tulajdonságai nélkül, amin áll.
         /// </summary>
         /// <param name="fieldName">A mező "neve"</param>
-        internal void PlacementBeforeRoll(string fieldName)
+        internal static void PlacementBeforeRoll(string fieldName)
         {
             Console.WriteLine($"📍 Aktuális mező, ahol állsz: {fieldName}");
             Console.WriteLine("🎲 Dobáshoz nyomd meg bármely gombot.");
@@ -97,7 +97,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// Tájékoztatja a játékost, hogy át-/rálépett a startmezőn/-re, illetve a jutalmáról.
         /// </summary>
         /// <param name="prize">Az átlépés jutalma</param>
-        internal void WriteCrossedStart(string prize)
+        internal static void WriteCrossedStart(string prize)
         {
             Console.WriteLine($"🤑 Át-/ráléptél a start mezőn/-re így jutalmad: {prize}");
         }
@@ -111,7 +111,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <param name="left">A konzol bal oldalától való távolság</param>
         /// <param name="top">A konzol tetejétől való távolság</param>
 
-        internal void WriteFieldWithOwner(string topRow, string tag, ConsoleColor tagBgColor, ConsoleColor tagFgColor, int left, int top)
+        internal static void WriteFieldWithOwner(string topRow, string tag, ConsoleColor tagBgColor, ConsoleColor tagFgColor, int left, int top)
         {
             Console.SetCursorPosition(left, top);
             Console.Write(topRow);
@@ -133,7 +133,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <param name="tag">A mező tag-je (Field.GetTag())</param>
         /// <param name="left">A konzol bal oldalától való távolság</param>
         /// <param name="top">A konzol tetejétől való távolság</param>
-        internal void WriteFieldNoOwner(string topRow, string tag, int left, int top)
+        internal static void WriteFieldNoOwner(string topRow, string tag, int left, int top)
         {
             Console.SetCursorPosition(left, top);
             Console.Write(topRow);
@@ -152,7 +152,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <param name="top">A konzol tetejétől való távolság (A mezőhöz képest +1)</param>
         /// <param name="BgColor">A játékos háttérszíne</param>
         /// <param name="FgColor">A játékos szövegszíne</param>
-        internal void WritePlayerOnField(string num, int left, int top, ConsoleColor BgColor, ConsoleColor FgColor)
+        internal static void WritePlayerOnField(string num, int left, int top, ConsoleColor BgColor, ConsoleColor FgColor)
         {
             Console.SetCursorPosition(left, top);
             Console.BackgroundColor = BgColor;

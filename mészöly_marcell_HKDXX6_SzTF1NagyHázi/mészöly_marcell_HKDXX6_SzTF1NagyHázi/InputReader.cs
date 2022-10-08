@@ -11,10 +11,14 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
     {
         internal string path;
         internal Game game;
+        internal string errorDesc;
+        internal StreamReader sr;
         internal InputReader(string Path)
         {
             path = Path;
             game = new Game();
+            errorDesc = string.Empty;
+            sr = new StreamReader(path);
         }
 
         /// <summary>
@@ -22,20 +26,19 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// </summary>
         /// <param name="writer">A UI írására használt objektum, hibák kiírásához</param>
         /// <returns>Game - a létrehozott játék</returns>
-        internal Game ReadGame(ref UIWriter writer)
+        internal Game ReadGame()
         {
             Console.ReadLine();
             if (!fetchFile())
             {
-                writer.WriteError("A fájl nem létezik.");
+                UIWriter.WriteError("A fájl nem létezik.");
                 Console.ReadKey();
                 Environment.Exit(0);
             }
 
-            string errorDesc = string.Empty;
-            if (!ReadFile(ref errorDesc))
+            if (!ReadFile())
             {
-                writer.WriteError($"Hiba a fájlfeldolgozás során: {errorDesc}");
+                UIWriter.WriteError($"Hiba a fájlfeldolgozás során: {errorDesc}");
                 Console.ReadKey();
                 Environment.Exit(0);
             }
@@ -59,16 +62,15 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <summary>
         /// Elvégzi a fájlbeolvasást.
         /// </summary>
-        /// <param name="errorDesc">Üres string, amelybe a hibaleírást helyezzük, ha történik hiba</param>
         /// <returns>bool - True, ha hiba nélkül lefut a beolvasás, False, ha hibába ütközik</returns>
-        private bool ReadFile(ref string errorDesc)
+        private bool ReadFile()
         {
             StreamReader sr = new StreamReader(path);
-            if (!ReadMoney(ref sr, ref errorDesc))
+            if (!ReadMoney())
             {
                 return false;
             }
-            if (!ReadFields(ref sr, ref errorDesc))
+            if (!ReadFields())
             {
                 return false;
             }
@@ -79,10 +81,8 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <summary>
         /// Beolvassa a játékosok kezdőtőkéjét és létrehozza a játékosokat azzal.
         /// </summary>
-        /// <param name="sr">Inicializált fájlolvasó</param>
-        /// <param name="errorDesc">Üres string, amelybe a hibaleírást helyezzük, ha történik hiba</param>
         /// <returns>bool - True, ha hiba nélkül lefut a beolvasás, False, ha hibába ütközik</returns>
-        private bool ReadMoney(ref StreamReader sr, ref string errorDesc)
+        private bool ReadMoney()
         {
             ConsoleColor[,] colorSchemas = new ConsoleColor[4, 2]
             {
@@ -109,10 +109,8 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <summary>
         /// Beolvassa a mezők számát és értékét, majd létrehozza a mezőket.
         /// </summary>
-        /// <param name="sr">Inicializált fájlolvasó</param>
-        /// <param name="errorDesc">res string, amelybe a hibaleírást helyezzük, ha történik hiba</param>
         /// <returns>bool - True, ha hiba nélkül lefut a beolvasás, False, ha hibába ütközik</returns>
-        private bool ReadFields(ref StreamReader sr, ref string errorDesc)
+        private bool ReadFields()
         {
             int numOfFields;
             if (!int.TryParse(sr.ReadLine(), out numOfFields) || (numOfFields + 1) % 4 != 0 || numOfFields < 0 || numOfFields > 48)

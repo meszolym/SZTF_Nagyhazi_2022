@@ -32,11 +32,11 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         }
 
         /// <summary>
-        /// Előrelépteti a játékost, és visszaadja, hogy átlépett-e a startmezőn.
+        /// Előrelépteti a játékost, és visszaadja, hogy hová lépett.
         /// </summary>
         /// <param name="rolled">A megtenni kívánt lépések száma</param>
-        /// <param name="maxfields">A mezők darabszáma</param>
-        /// <returns>Bool - igaz, ha átlépett a starton, hamis, ha nem.</returns>
+        /// <param name="fields">A mezőket tartalmazó tömb</param>
+        /// <returns>Field - A mező, ahova a játékos érkezett</returns>
         internal Field StepForward(int rolled, ref Field[] fields)
         {
             PlacementID += rolled;

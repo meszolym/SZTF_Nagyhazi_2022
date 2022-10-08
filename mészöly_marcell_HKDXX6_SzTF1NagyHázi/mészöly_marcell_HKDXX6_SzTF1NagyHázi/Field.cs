@@ -11,8 +11,6 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         internal int ID;
         internal int Price;
         internal int OwnerID;
-        internal int BoardPlacementLeft;
-        internal int BoardPlacementTop;
         /*
          * -1 = No owner
          * 0 = Player1
@@ -20,6 +18,9 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
          * 2 = Player3
          * 3 = Player4
          */
+        internal int BoardPlacementLeft;
+        internal int BoardPlacementTop;
+
         internal Field(int id, int price, int ownerID, int boardPlacementLeft, int boardPlacementTop)
         {
             ID = id;

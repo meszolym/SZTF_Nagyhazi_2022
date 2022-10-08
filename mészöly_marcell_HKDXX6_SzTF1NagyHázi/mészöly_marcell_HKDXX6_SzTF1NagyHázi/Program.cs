@@ -11,20 +11,19 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         private static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.Unicode; //az emojik megjelenítéséhez
-            UIWriter writer = new UIWriter();
 
-            writer.WriteWelcome();
+            UIWriter.WriteWelcome();
 
-            writer.AskForPath();
+            UIWriter.AskForPath();
             string path = string.Empty;
             path += "./Source/";
             path += Console.ReadLine();
 
             InputReader inputReader = new InputReader(path);
-            Game game = inputReader.ReadGame(ref writer);
-            writer.WriteSuccessfulRead();
+            Game game = inputReader.ReadGame();
+            UIWriter.WriteSuccessfulRead();
 
-            game.Run(ref writer);
+            game.Run();
 
             Environment.Exit(0);
 
