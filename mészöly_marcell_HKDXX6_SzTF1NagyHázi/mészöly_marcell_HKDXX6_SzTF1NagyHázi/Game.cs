@@ -30,20 +30,16 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
 
             while (remainingPlayers > 2)
             {
-                if (turnCounter > players.Length - 1)
-                {
-                    turnCounter = 0;
-                }
                 while (!players[turnCounter].inGame)
                 {
                     turnCounter++;
-                    if (turnCounter > players.Length-1)
+                    if (turnCounter >= players.Length)
                     {
                         turnCounter = 0;
                     }
                 }
                 GameRound();
-                if (turnCounter > players.Length)
+                if (turnCounter >= players.Length)
                 {
                     turnCounter = 0;
                 }

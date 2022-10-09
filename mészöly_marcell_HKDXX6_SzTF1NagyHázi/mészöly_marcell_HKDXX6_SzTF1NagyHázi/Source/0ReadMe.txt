@@ -2,7 +2,7 @@
 
 ---
 A fájlban leírandó változók:
-kezdőtőke - pozitív egész szám, maximum 1073741823.
+kezdőtőke - pozitív egész szám, maximum 1 073 741 823.
 mezők száma - n, amire igaz, hogy n ∈ {Z+ | n>6; n<50; n%4 = 0}.
 	A startmezőt a játék autmatikusan generálja és adja hozzá a mezőkhöz!
 mezők pénzértékei - pozitív egész számok, maximum 2 147 483 647, pontosvesszővel elválasztva.
