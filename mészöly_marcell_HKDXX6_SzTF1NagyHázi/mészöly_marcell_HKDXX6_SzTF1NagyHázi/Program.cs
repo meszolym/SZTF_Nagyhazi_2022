@@ -11,6 +11,8 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         private static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.Unicode; //az emojik megjelenítéséhez
+            Writer.BaseBgColor = Console.BackgroundColor;
+            Writer.BaseFgColor = Console.ForegroundColor;
 
             Writer.WriteWelcome();
 

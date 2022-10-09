@@ -48,7 +48,8 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                 }
             }
             Console.Clear();
-            UIWriter.AnnounceWinner(GetWinner());
+            Player winner = GetWinner();
+            Writer.AnnounceWinner(winner.GetName(), winner.bgColor, winner.fgColor);
             Console.ReadKey();
         }
         /// <summary>
@@ -64,16 +65,16 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                 if (departureField.OwnerID != -1)
                 {
                     Player owner = players[departureField.OwnerID];
-                    UIWriter.PlacementBeforeRoll(departureField.GetNameString(), owner.GetName(), owner.bgColor, owner.fgColor, departureField.GetPriceString());
+                    Writer.PlacementBeforeRoll(departureField.GetNameString(), owner.GetName(), owner.bgColor, owner.fgColor, departureField.GetPriceString());
                 }
                 else
                 {
-                    UIWriter.PlacementBeforeRollNoOwner(departureField.GetNameString(), departureField.GetPriceString());
+                    Writer.PlacementBeforeRoll(departureField.GetNameString(), "Nincs", Writer.BaseBgColor, Writer.BaseFgColor, departureField.GetPriceString());
                 }
             }
             else //startmező
             {
-                UIWriter.PlacementBeforeRoll(departureField.GetNameString());
+                Writer.PlacementBeforeRoll(departureField.GetNameString());
             }
             Console.ReadKey();
 
@@ -83,11 +84,11 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
 
             PostData();
 
-            UIWriter.WriteRolledValue(departureField.GetNameString(), Rolled);
+            Writer.WriteRolledValue(departureField.GetNameString(), Rolled);
 
             if (steppedOnField.ID < departureField.ID)
             {
-                UIWriter.WriteCrossedStart(MinFieldPriceString());
+                Writer.WriteCrossedStart(MinFieldPriceString());
                 players[turnCounter].Money += MinFieldPrice();
                 PostPlayerStatuses();
 
@@ -100,21 +101,21 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                 if (players[turnCounter].GetPlacementField(ref fields).OwnerID != -1) //van ownere
                 {
                     Player owner = players[steppedOnField.OwnerID];
-                    UIWriter.WritePlacementAfterRoll(steppedOnField.GetNameString(), owner.GetName(), owner.bgColor, owner.fgColor, steppedOnField.GetPriceString());
+                    Writer.WritePlacementAfterRoll(steppedOnField.GetNameString(), owner.GetName(), owner.bgColor, owner.fgColor, steppedOnField.GetPriceString());
                     Payrent(steppedOnField);
                 }
                 else //nincs ownere
                 {
-                    UIWriter.WritePlacementAfterRollNoOwner(steppedOnField.GetNameString(), steppedOnField.GetPriceString());
+                    Writer.WritePlacementAfterRoll(steppedOnField.GetNameString(), "Nincs", Writer.BaseBgColor,Writer.BaseFgColor, steppedOnField.GetPriceString());
                     BuyField(steppedOnField);
                 }
             }
             else //startmező
             {
-                UIWriter.WritePlacementAfterRoll(players[turnCounter].GetPlacementField(ref fields).GetNameString());
+                Writer.WritePlacementAfterRoll(players[turnCounter].GetPlacementField(ref fields).GetNameString());
             }
             Writer.WriteDivider();
-            UIWriter.WriteEndOfRound();
+            Writer.WriteEndOfRound();
             Console.ReadKey();
             turnCounter++;
         }
@@ -128,7 +129,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             {
                 if (players[placement.OwnerID].inGame)
                 {
-                    UIWriter.RentPayment();
+                    Writer.RentPayment();
                     if (players[turnCounter].Money > placement.Price) //kifizeti
                     {
                         players[placement.OwnerID].Money += placement.Price;
@@ -142,12 +143,12 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                         players[turnCounter].inGame = false;
                         remainingPlayers--;
                         PostPlayerStatuses();
-                        UIWriter.WentBankrupt();
+                        Writer.WentBankrupt();
                     }
                 }
                 else
                 {
-                    UIWriter.WriteNoRent();
+                    Writer.WriteNoRent();
                 }
             }     
         }
@@ -159,23 +160,23 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         {
             if (players[turnCounter].Money > placement.Price) //megveheti
             {
-                UIWriter.AskBuyQuestion();
+                Writer.AskBuyQuestion();
                 string buyYesNo = Console.ReadLine();
                 if (buyYesNo == "I" || buyYesNo == "i")
                 {
                     players[turnCounter].Money -= placement.Price;
                     placement.OwnerID = turnCounter;
-                    UIWriter.WriteBoughtField();
+                    Writer.WriteBoughtField();
                     PostData(reDraw: true);
                 }
                 else
                 {
-                    UIWriter.WriteNotBought();
+                    Writer.WriteNotBoughtField();
                 }
             }
             else
             {
-                UIWriter.WriteCannotBuy();
+                Writer.WriteCannotBuy();
             }
         }
 
@@ -192,17 +193,17 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// Megszerzi a játékban győztes játékos nevét
         /// </summary>
         /// <returns>string - a játékos neve</returns>
-        private string GetWinner()
+        private Player GetWinner()
         {
-            int MaxID = 0;
+            Player MaxPlayer = players[0];
             for (int i = 0; i < players.Length; i++)
             {
-                if (players[i].Money > players[MaxID].Money)
+                if (players[i].Money > MaxPlayer.Money)
                 {
-                    MaxID = i;
+                    MaxPlayer = players[i];
                 }
             }
-            return $"{MaxID + 1}. játékos";            
+            return MaxPlayer;            
         }
         /// <summary>
         /// Megadja a legkisebb értékű mező értékét.
@@ -257,18 +258,18 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             {
                 if (fields[i].OwnerID != -1)
                 {
-                    UIWriter.WriteFieldWithOwner(fields[i].GetTop(), fields[i].GetFlag(), players[fields[i].OwnerID].bgColor, players[fields[i].OwnerID].fgColor, fields[i].BoardPlacementLeft, fields[i].BoardPlacementTop);
+                    Writer.WriteFieldToBoard(fields[i].GetTop(), fields[i].GetFlag(), players[fields[i].OwnerID].bgColor, players[fields[i].OwnerID].fgColor, fields[i].BoardPlacementLeft, fields[i].BoardPlacementTop);
                 }
                 else
                 {
-                    UIWriter.WriteFieldNoOwner(fields[i].GetTop(), fields[i].GetFlag(), fields[i].BoardPlacementLeft, fields[i].BoardPlacementTop);
+                    Writer.WriteFieldToBoard(fields[i].GetTop(), fields[i].GetFlag(),Writer.BaseBgColor,Writer.BaseFgColor, fields[i].BoardPlacementLeft, fields[i].BoardPlacementTop);
                 }
                 Player[] OnField = fields[i].GetPlayersOnField(ref players);
                 for (int j = 0; j < OnField.Length; j++)
                 {
                     if (OnField[j].inGame)
                     {
-                        UIWriter.WritePlayerOnField((OnField[j].ID + 1).ToString(), fields[i].BoardPlacementLeft + 2 + j, fields[i].BoardPlacementTop + 1, OnField[j].bgColor, OnField[j].fgColor);
+                        Writer.WritePlayerOnField((OnField[j].ID + 1).ToString(), fields[i].BoardPlacementLeft + 2 + j, fields[i].BoardPlacementTop + 1, OnField[j].bgColor, OnField[j].fgColor);
                     }
                 }
             }
@@ -276,7 +277,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             if (!reDraw)
             {
                 Console.SetCursorPosition(0, (fields.Length / 4 + 1) * Field.Height + players.Length + 2);
-                UIWriter.WritePlayerRound($"{turnCounter + 1}. játékos", players[turnCounter].bgColor, players[turnCounter].fgColor);
+                Writer.WritePlayerRound($"{turnCounter + 1}. játékos", players[turnCounter].bgColor, players[turnCounter].fgColor);
             }
             else
             {
@@ -302,11 +303,11 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                 Console.SetCursorPosition(0, Console.CursorTop-1); 
                 if (players[i].inGame)
                 {
-                    UIWriter.WritePlayerStatus($"{i + 1}. játékos", $"{players[i].Money} $", players[i].bgColor, players[i].fgColor);
+                    Writer.WritePlayerStatus($"{i + 1}. játékos", $"{players[i].Money} $", players[i].bgColor, players[i].fgColor);
                 }
                 else
                 {
-                    UIWriter.WritePlayerStatus($"{i + 1}. játékos", $"{players[i].Money} $ (Kiesett)", players[i].bgColor, players[i].fgColor);
+                    Writer.WritePlayerStatus($"{i + 1}. játékos", $"{players[i].Money} $ (Kiesett)", players[i].bgColor, players[i].fgColor);
                 }
             }
             Writer.WriteDivider();

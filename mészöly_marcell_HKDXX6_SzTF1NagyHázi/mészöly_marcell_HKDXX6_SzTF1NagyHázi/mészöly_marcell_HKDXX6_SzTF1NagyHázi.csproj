@@ -6,10 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="UIWriter.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Source\0ReadMe.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
