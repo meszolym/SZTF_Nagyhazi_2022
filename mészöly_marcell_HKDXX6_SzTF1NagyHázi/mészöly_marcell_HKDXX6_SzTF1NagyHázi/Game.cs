@@ -93,7 +93,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
 
             }
 
-            UIWriter.WriteDivider();
+            Writer.WriteDivider();
 
             if (players[turnCounter].GetPlacementField(ref fields).ID != 0) //nem startmező
             {
@@ -113,7 +113,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             {
                 UIWriter.WritePlacementAfterRoll(players[turnCounter].GetPlacementField(ref fields).GetNameString());
             }
-            UIWriter.WriteDivider();
+            Writer.WriteDivider();
             UIWriter.WriteEndOfRound();
             Console.ReadKey();
             turnCounter++;
@@ -295,7 +295,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             int top = Console.CursorTop;
 
             Console.SetCursorPosition(0, (fields.Length / 4 + 1) * Field.Height);
-            UIWriter.WriteDivider();
+            Writer.WriteDivider();
             for (int i = 0; i < players.Length; i++)
             {
                 Console.WriteLine(new string(' ', Console.BufferWidth)); //sor tisztítása
@@ -309,7 +309,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                     UIWriter.WritePlayerStatus($"{i + 1}. játékos", $"{players[i].Money} $ (Kiesett)", players[i].bgColor, players[i].fgColor);
                 }
             }
-            UIWriter.WriteDivider();
+            Writer.WriteDivider();
             Console.SetCursorPosition(left, top);
         }
     }

@@ -29,14 +29,14 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         {
             if (!FetchFile())
             {
-                UIWriter.WriteError("A fájl nem létezik.");
+                Writer.WriteError("A fájl nem létezik.");
                 Console.ReadKey();
                 Environment.Exit(0);
             }
             sr = new StreamReader(path);
             if (!ReadFile())
             {
-                UIWriter.WriteError($"Hiba a fájlfeldolgozás során: {errorDesc}");
+                Writer.WriteError($"Hiba a fájlfeldolgozás során: {errorDesc}");
                 Console.ReadKey();
                 Environment.Exit(0);
             }
