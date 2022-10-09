@@ -57,5 +57,10 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             return fields[PlacementID];
         }
 
+        internal string GetName()
+        {
+            return $"{ID + 1}. játékos";
+        }
+
     }
 }

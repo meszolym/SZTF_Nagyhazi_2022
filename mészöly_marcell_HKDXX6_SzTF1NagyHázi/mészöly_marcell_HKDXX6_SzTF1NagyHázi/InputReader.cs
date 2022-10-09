@@ -19,7 +19,6 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             path = Path;
             game = new Game();
             errorDesc = string.Empty;
-            sr = new StreamReader(path);
         }
 
         /// <summary>
@@ -34,7 +33,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                 Console.ReadKey();
                 Environment.Exit(0);
             }
-
+            sr = new StreamReader(path);
             if (!ReadFile())
             {
                 UIWriter.WriteError($"Hiba a fájlfeldolgozás során: {errorDesc}");
@@ -91,7 +90,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                 //{backcolor, forecolor}
             };
 
-            if (!int.TryParse(sr.ReadLine(), out int money) || money <= 0)
+            if (!int.TryParse(sr.ReadLine(), out int money) || money <= 0 || money >= int.MaxValue/2)
             {
                 errorDesc = "Nem megfelelő kezdőtőke.";
                 return false;
@@ -132,18 +131,10 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             return true;
         }
 
-
-        private void SortAndAssignFields()
-        {
-            SortFields();
-            AssignFields();
-        }
-
         /// <summary>
-        /// A mezőket rendezi sorba ár szerint (javított beillesztéses rendezéssel, majd újra kiadja az ID-kat.
+        /// A mezőket rendezi sorba ár szerint (javított beillesztéses rendezéssel, majd újra kiadja az ID-kat és beállítja a board megjelenítés során használt helyeket.
         /// </summary> 
-
-        private void SortFields()
+        private void SortAndAssignFields()
         {
             for (int i = 1; i < game.fields.Length; i++)
             {
@@ -156,39 +147,33 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                 }
                 game.fields[j + 1] = helper;
             }
+            int dim = game.fields.Length / 4;
             for (int i = 0; i < game.fields.Length; i++)
             {
                 game.fields[i].ID = i;
-            }
-        }
 
-        private void AssignFields()
-        {
-            int dim = game.fields.Length / 4;
-            for (int i = 0; i<game.fields.Length; i++)
-            {
                 if (i < dim) //felső sorban lesz
                 {
-                    game.fields[i].BoardPlacementLeft = i * 9;
+                    game.fields[i].BoardPlacementLeft = i * Field.Width;
                     game.fields[i].BoardPlacementTop = 0;
                 }
                 else if (i < dim * 2) //jobb oldali oszlopban lesz
                 {
-                    game.fields[i].BoardPlacementLeft = (dim) * 9;
-                    game.fields[i].BoardPlacementTop = 3 * (i - dim);
+                    game.fields[i].BoardPlacementLeft = (dim) * Field.Width;
+                    game.fields[i].BoardPlacementTop = Field.Height * (i - dim);
                 }
                 else if (i < dim * 3) //alsó sorban lesz
                 {
-                    game.fields[i].BoardPlacementLeft = (dim * 3 - i) * 9;
-                    game.fields[i].BoardPlacementTop = 3 * (dim);
+                    game.fields[i].BoardPlacementLeft = (dim * 3 - i) * Field.Width;
+                    game.fields[i].BoardPlacementTop = Field.Height * (dim);
                 }
                 else //(i < dim * 4) bal oldali oszlopban lesz
                 {
                     game.fields[i].BoardPlacementLeft = 0;
-                    game.fields[i].BoardPlacementTop = 3 * (dim * 4 - i);
+                    game.fields[i].BoardPlacementTop = Field.Height * (dim * 4 - i);
                 }
             }
-            
+
         }
 
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,6 +9,9 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
 {
     internal class Field
     {
+        
+        internal const int Height = 3; //kiírási magasság
+        internal const int Width = 9; //kiírási szélesség, beleszámítva egy szóköz elválasztást
         internal int ID;
         internal int Price;
         internal int OwnerID;
@@ -32,7 +36,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// </summary>
         /// <param name="a"></param>
         /// <param name="b"></param>
-        /// <returns>True, ha a ára nagyobb mint b ára, false, ha nem</returns>
+        /// <returns>Bool - True, ha a ára nagyobb mint b ára, false, ha nem</returns>
         public static bool operator >(Field a, Field b)
         {
             return a.Price > b.Price;
@@ -42,21 +46,15 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// </summary>
         /// <param name="a"></param>
         /// <param name="b"></param>
-        /// <returns>True, ha b ára nagyobb mint a ára, false, ha nem</returns>
+        /// <returns>Bool - True, ha b ára nagyobb mint a ára, false, ha nem</returns>
         public static bool operator <(Field a, Field b)
         {
             return a.Price < b.Price;
         }
-
-        internal string GetOwnerString()
-        {
-            if (OwnerID == -1)
-            {
-                return "Nincs";
-            }
-            return $"{OwnerID + 1}. játékos";
-        }
-
+        /// <summary>
+        /// Megadja a mező árát mértékegységgel.
+        /// </summary>
+        /// <returns>String - A mező ára mértékegységgel</returns>
         internal string GetPriceString()
         {
             if (ID == 0)
@@ -66,6 +64,10 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             return $"{Price} $";
         }
 
+        /// <summary>
+        /// Megadja a mező "nevét".
+        /// </summary>
+        /// <returns>String - A mező "neve"</returns>
         internal string GetNameString()
         {
             if (ID == 0)
@@ -75,7 +77,11 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             return $"{ID}. mező";
         }
 
-        internal string GetTag()
+        /// <summary>
+        /// Megadja egy mező jobb felső sarkában feltüntetendő Flag-et.
+        /// </summary>
+        /// <returns>string - a Flag</returns>
+        internal string GetFlag()
         {
             if (ID == 0)
             {
@@ -87,19 +93,22 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             }
             return ID.ToString();
         }
-
+        /// <summary>
+        /// Megadja a mező kiírásakor használandó felső border sort, a flag nélkül.
+        /// </summary>
+        /// <returns>String - A mező felső border sora</returns>
         internal string GetTop()
         {
-            string tag = GetTag();
-            if (tag.Length == 1)
+            string flag = GetFlag();
+            if (flag.Length == 1)
+            {
+                return $"┌─────┤";
+            }
+            if (flag.Length == 2)
             {
                 return $"┌────┤";
             }
-            if (tag.Length == 2)
-            {
-                return $"┌───┤";
-            }
-            return $"┌──┤";
+            return $"┌───┤";
         }
         /// <summary>
         /// Megadja azoknak a játékosoknak az ID-ját, amelyek az adott mezőn állnak.

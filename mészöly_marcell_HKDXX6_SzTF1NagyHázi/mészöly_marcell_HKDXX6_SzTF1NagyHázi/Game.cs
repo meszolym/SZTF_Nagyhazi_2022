@@ -47,8 +47,9 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                     turnCounter = 0;
                 }
             }
-
+            Console.Clear();
             UIWriter.AnnounceWinner(GetWinner());
+            Console.ReadKey();
         }
         /// <summary>
         /// A játék egy körét futtatja le.
@@ -58,11 +59,19 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             PostData();
             Field departureField = players[turnCounter].GetPlacementField(ref fields);
 
-            if (players[turnCounter].GetPlacementField(ref fields).ID != 0)
+            if (departureField.ID != 0) //nem startmező
             {
-                UIWriter.PlacementBeforeRoll(departureField.GetNameString(),departureField.GetOwnerString(), departureField.GetPriceString());
+                if (departureField.OwnerID != -1)
+                {
+                    Player owner = players[departureField.OwnerID];
+                    UIWriter.PlacementBeforeRoll(departureField.GetNameString(), owner.GetName(), owner.bgColor, owner.fgColor, departureField.GetPriceString());
+                }
+                else
+                {
+                    UIWriter.PlacementBeforeRollNoOwner(departureField.GetNameString(), departureField.GetPriceString());
+                }
             }
-            else
+            else //startmező
             {
                 UIWriter.PlacementBeforeRoll(departureField.GetNameString());
             }
@@ -70,20 +79,106 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
 
             int Rolled = DiceRoll();
 
-            Field steppedOn = players[turnCounter].StepForward(Rolled, ref fields);
+            Field steppedOnField = players[turnCounter].StepForward(Rolled, ref fields);
 
             PostData();
 
-            if (steppedOn.ID < departureField.ID)
+            UIWriter.WriteRolledValue(departureField.GetNameString(), Rolled);
+
+            if (steppedOnField.ID < departureField.ID)
             {
                 UIWriter.WriteCrossedStart(MinFieldPriceString());
                 players[turnCounter].Money += MinFieldPrice();
+                PostPlayerStatuses();
 
             }
 
+            UIWriter.WriteDivider();
+
+            if (players[turnCounter].GetPlacementField(ref fields).ID != 0) //nem startmező
+            {
+                if (players[turnCounter].GetPlacementField(ref fields).OwnerID != -1) //van ownere
+                {
+                    Player owner = players[steppedOnField.OwnerID];
+                    UIWriter.WritePlacementAfterRoll(steppedOnField.GetNameString(), owner.GetName(), owner.bgColor, owner.fgColor, steppedOnField.GetPriceString());
+                    Payrent(steppedOnField);
+                }
+                else //nincs ownere
+                {
+                    UIWriter.WritePlacementAfterRollNoOwner(steppedOnField.GetNameString(), steppedOnField.GetPriceString());
+                    BuyField(steppedOnField);
+                }
+            }
+            else //startmező
+            {
+                UIWriter.WritePlacementAfterRoll(players[turnCounter].GetPlacementField(ref fields).GetNameString());
+            }
+            UIWriter.WriteDivider();
+            UIWriter.WriteEndOfRound();
             Console.ReadKey();
             turnCounter++;
         }
+        /// <summary>
+        /// A bérleti díj kifizettetéséért felelős.
+        /// </summary>
+        /// <param name="placement">A mező, ahol a játékos áll</param>
+        private void Payrent(Field placement)
+        {
+            if (players[turnCounter].ID != placement.OwnerID) //önmagának nem fizet bérletet
+            {
+                if (players[placement.OwnerID].inGame)
+                {
+                    UIWriter.RentPayment();
+                    if (players[turnCounter].Money > placement.Price) //kifizeti
+                    {
+                        players[placement.OwnerID].Money += placement.Price;
+                        players[turnCounter].Money -= placement.Price;
+                        PostPlayerStatuses();
+                    }
+                    else //csődbemegy
+                    {
+                        players[placement.OwnerID].Money += players[turnCounter].Money;
+                        players[turnCounter].Money = 0;
+                        players[turnCounter].inGame = false;
+                        remainingPlayers--;
+                        PostPlayerStatuses();
+                        UIWriter.WentBankrupt();
+                    }
+                }
+                else
+                {
+                    UIWriter.WriteNoRent();
+                }
+            }     
+        }
+        /// <summary>
+        /// A mezők megvásárlásáért felel
+        /// </summary>
+        /// <param name="placement">A mező, ahol a játékos áll</param>
+        private void BuyField(Field placement)
+        {
+            if (players[turnCounter].Money > placement.Price) //megveheti
+            {
+                UIWriter.AskBuyQuestion();
+                string buyYesNo = Console.ReadLine();
+                if (buyYesNo == "I" || buyYesNo == "i")
+                {
+                    players[turnCounter].Money -= placement.Price;
+                    placement.OwnerID = turnCounter;
+                    UIWriter.WriteBoughtField();
+                    PostData(reDraw: true);
+                }
+                else
+                {
+                    UIWriter.WriteNotBought();
+                }
+            }
+            else
+            {
+                UIWriter.WriteCannotBuy();
+            }
+        }
+
         /// <summary>
         /// Elvégez egy kockadobást.
         /// </summary>
@@ -125,6 +220,10 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             }
             return minField.GetPriceString();
         }
+        /// <summary>
+        /// Megadja a legkisebb értékű mező értékét.
+        /// </summary>
+        /// <returns>int - a legkisebb értékű mező értéke</returns>
         private int MinFieldPrice()
         {
             Field minField = fields[1]; //startmezőt nem vesszük figyelembe
@@ -140,35 +239,78 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <summary>
         /// Átadja a játék adatait a UI író felé kiírásra.
         /// </summary>
-        private void PostData()
+        private void PostData(bool reDraw = false)
         {
-            Console.Clear();
+            int left = 0;
+            int top = 0;
+            if (!reDraw)
+            {
+                Console.Clear();
+            }
+            else
+            {
+                left = Console.CursorLeft;
+                top = Console.CursorTop;
+            }
+            
             for (int i = 0; i < fields.Length; i++)
             {
                 if (fields[i].OwnerID != -1)
                 {
-                    UIWriter.WriteFieldWithOwner(fields[i].GetTop(), fields[i].GetTag(), players[fields[i].OwnerID].bgColor, players[fields[i].OwnerID].fgColor, fields[i].BoardPlacementLeft, fields[i].BoardPlacementTop);
+                    UIWriter.WriteFieldWithOwner(fields[i].GetTop(), fields[i].GetFlag(), players[fields[i].OwnerID].bgColor, players[fields[i].OwnerID].fgColor, fields[i].BoardPlacementLeft, fields[i].BoardPlacementTop);
                 }
                 else
                 {
-                    UIWriter.WriteFieldNoOwner(fields[i].GetTop(), fields[i].GetTag(), fields[i].BoardPlacementLeft, fields[i].BoardPlacementTop);
+                    UIWriter.WriteFieldNoOwner(fields[i].GetTop(), fields[i].GetFlag(), fields[i].BoardPlacementLeft, fields[i].BoardPlacementTop);
                 }
                 Player[] OnField = fields[i].GetPlayersOnField(ref players);
                 for (int j = 0; j < OnField.Length; j++)
                 {
-
-                    UIWriter.WritePlayerOnField((OnField[j].ID + 1).ToString(), fields[i].BoardPlacementLeft +2 + j, fields[i].BoardPlacementTop + 1, OnField[j].bgColor, OnField[j].fgColor);
-
+                    if (OnField[j].inGame)
+                    {
+                        UIWriter.WritePlayerOnField((OnField[j].ID + 1).ToString(), fields[i].BoardPlacementLeft + 2 + j, fields[i].BoardPlacementTop + 1, OnField[j].bgColor, OnField[j].fgColor);
+                    }
                 }
             }
-            Console.SetCursorPosition(0,(fields.Length/4+1)*3);
-            UIWriter.WriteDivider();
-            for (int i = 0; i<players.Length; i++)
+            PostPlayerStatuses();
+            if (!reDraw)
             {
-                UIWriter.WritePlayerStatus($"{i + 1}. játékos", $"{players[i].Money} $");
+                Console.SetCursorPosition(0, (fields.Length / 4 + 1) * Field.Height + players.Length + 2);
+                UIWriter.WritePlayerRound($"{turnCounter + 1}. játékos", players[turnCounter].bgColor, players[turnCounter].fgColor);
+            }
+            else
+            {
+                Console.SetCursorPosition(left, top);
+            }
+            
+            
+
+        }
+        /// <summary>
+        /// Átadja a játékosok státuszait a UI író felé kiírásra.
+        /// </summary>
+        private void PostPlayerStatuses()
+        {
+            int left = Console.CursorLeft;
+            int top = Console.CursorTop;
+
+            Console.SetCursorPosition(0, (fields.Length / 4 + 1) * Field.Height);
+            UIWriter.WriteDivider();
+            for (int i = 0; i < players.Length; i++)
+            {
+                Console.WriteLine(new string(' ', Console.BufferWidth)); //sor tisztítása
+                Console.SetCursorPosition(0, Console.CursorTop-1); 
+                if (players[i].inGame)
+                {
+                    UIWriter.WritePlayerStatus($"{i + 1}. játékos", $"{players[i].Money} $", players[i].bgColor, players[i].fgColor);
+                }
+                else
+                {
+                    UIWriter.WritePlayerStatus($"{i + 1}. játékos", $"{players[i].Money} $ (Kiesett)", players[i].bgColor, players[i].fgColor);
+                }
             }
             UIWriter.WriteDivider();
-
+            Console.SetCursorPosition(left, top);
         }
     }
 }
