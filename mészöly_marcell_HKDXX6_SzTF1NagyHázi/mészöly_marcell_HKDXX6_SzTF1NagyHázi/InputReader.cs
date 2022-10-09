@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -24,12 +25,10 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <summary>
         /// Az játékadatok beolvasásának futtatásáért felel.
         /// </summary>
-        /// <param name="writer">A UI írására használt objektum, hibák kiírásához</param>
         /// <returns>Game - a létrehozott játék</returns>
         internal Game ReadGame()
         {
-            Console.ReadLine();
-            if (!fetchFile())
+            if (!FetchFile())
             {
                 UIWriter.WriteError("A fájl nem létezik.");
                 Console.ReadKey();
@@ -42,7 +41,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                 Console.ReadKey();
                 Environment.Exit(0);
             }
-            SortFields();
+            SortAndAssignFields();
             return game;
         }
 
@@ -50,7 +49,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// Ellenőrzi, hogy létezik-e a fájl.
         /// </summary>
         /// <returns>bool - True, ha a fájl létezik, false, ha nem</returns>
-        private bool fetchFile()
+        private bool FetchFile()
         {
             if (!File.Exists($"{path}"))
             {
@@ -65,7 +64,6 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <returns>bool - True, ha hiba nélkül lefut a beolvasás, False, ha hibába ütközik</returns>
         private bool ReadFile()
         {
-            StreamReader sr = new StreamReader(path);
             if (!ReadMoney())
             {
                 return false;
@@ -93,8 +91,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                 //{backcolor, forecolor}
             };
 
-            int money;
-            if (!int.TryParse(sr.ReadLine(), out money) || money <= 0)
+            if (!int.TryParse(sr.ReadLine(), out int money) || money <= 0)
             {
                 errorDesc = "Nem megfelelő kezdőtőke.";
                 return false;
@@ -112,50 +109,40 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <returns>bool - True, ha hiba nélkül lefut a beolvasás, False, ha hibába ütközik</returns>
         private bool ReadFields()
         {
-            int numOfFields;
-            if (!int.TryParse(sr.ReadLine(), out numOfFields) || (numOfFields + 1) % 4 != 0 || numOfFields < 0 || numOfFields > 48)
+            if (!int.TryParse(sr.ReadLine(), out int numOfFields) || (numOfFields + 1) % 4 != 0 || numOfFields < 7 || numOfFields > 47)
             {
                 errorDesc = "Nem megfelelő mezőszám.";
                 return false;
             }
             numOfFields++; //start mezőnek hely
             game.fields = new Field[numOfFields];
-            game.fields[0] = new Field(0, -1, -1, 0, 0); //start mező
+            game.fields[0] = new Field(0, -1, -1); //start mező
             string[] prices = sr.ReadLine().Split(";");
-            int dim = numOfFields / 4;
             for (int i = 1; i < game.fields.Length; i++)
             {
-                int price;
 
-                if (!int.TryParse(prices[i - 1], out price) || price <= 0)
+                if (!int.TryParse(prices[i - 1], out int price) || price <= 0)
                 {
                     errorDesc = $"Nem megfelelő ár a(z) {i}. helyen.";
                     return false;
                 }
 
-                if (i < dim) //felső sorban lesz
-                {
-                    game.fields[i] = new Field(i, price, -1,i*9,0);
-                }
-                else if (i < dim*2) //jobb oldali oszlopban lesz
-                {
-                    game.fields[i] = new Field(i, price, -1, (dim)*9, 3*(i-dim));
-                }
-                else if (i<dim*3) //alsó sorban lesz
-                {
-                    game.fields[i] = new Field(i, price, -1,(dim*3-i)*9,3*(dim));
-                }
-                else //(i < dim * 4) bal oldali oszlopban lesz
-                {
-                    game.fields[i] = new Field(i, price, -1,0,3*(dim*4-i));
-                }
+                game.fields[i] = new Field(i, price, -1);
             }
             return true;
         }
 
+
+        private void SortAndAssignFields()
+        {
+            SortFields();
+            AssignFields();
+        }
+
         /// <summary>
         /// A mezőket rendezi sorba ár szerint (javított beillesztéses rendezéssel, majd újra kiadja az ID-kat.
-        /// </summary>
+        /// </summary> 
+
         private void SortFields()
         {
             for (int i = 1; i < game.fields.Length; i++)
@@ -173,6 +160,35 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             {
                 game.fields[i].ID = i;
             }
+        }
+
+        private void AssignFields()
+        {
+            int dim = game.fields.Length / 4;
+            for (int i = 0; i<game.fields.Length; i++)
+            {
+                if (i < dim) //felső sorban lesz
+                {
+                    game.fields[i].BoardPlacementLeft = i * 9;
+                    game.fields[i].BoardPlacementTop = 0;
+                }
+                else if (i < dim * 2) //jobb oldali oszlopban lesz
+                {
+                    game.fields[i].BoardPlacementLeft = (dim) * 9;
+                    game.fields[i].BoardPlacementTop = 3 * (i - dim);
+                }
+                else if (i < dim * 3) //alsó sorban lesz
+                {
+                    game.fields[i].BoardPlacementLeft = (dim * 3 - i) * 9;
+                    game.fields[i].BoardPlacementTop = 3 * (dim);
+                }
+                else //(i < dim * 4) bal oldali oszlopban lesz
+                {
+                    game.fields[i].BoardPlacementLeft = 0;
+                    game.fields[i].BoardPlacementTop = 3 * (dim * 4 - i);
+                }
+            }
+            
         }
 
     }

@@ -21,13 +21,11 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         internal int BoardPlacementLeft;
         internal int BoardPlacementTop;
 
-        internal Field(int id, int price, int ownerID, int boardPlacementLeft, int boardPlacementTop)
+        internal Field(int id, int price, int ownerID)
         {
             ID = id;
             Price = price;
             OwnerID = ownerID;
-            BoardPlacementLeft = boardPlacementLeft;
-            BoardPlacementTop = boardPlacementTop;
         }
         /// <summary>
         /// Összehasonlítja két mező árát.
@@ -93,16 +91,15 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         internal string GetTop()
         {
             string tag = GetTag();
-
             if (tag.Length == 1)
             {
-                return $"┌────┤{tag}";
+                return $"┌────┤";
             }
             if (tag.Length == 2)
             {
-                return $"┌───┤{tag}";
+                return $"┌───┤";
             }
-            return $"┌──┤{tag}";
+            return $"┌──┤";
         }
         /// <summary>
         /// Megadja azoknak a játékosoknak az ID-ját, amelyek az adott mezőn állnak.

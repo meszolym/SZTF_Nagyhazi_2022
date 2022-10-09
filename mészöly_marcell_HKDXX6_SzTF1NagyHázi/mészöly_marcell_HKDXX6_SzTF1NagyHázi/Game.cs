@@ -29,6 +29,10 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
 
             while (remainingPlayers > 2)
             {
+                if (turnCounter > players.Length - 1)
+                {
+                    turnCounter = 0;
+                }
                 while (!players[turnCounter].inGame)
                 {
                     turnCounter++;
@@ -62,16 +66,22 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             {
                 UIWriter.PlacementBeforeRoll(departureField.GetNameString());
             }
+            Console.ReadKey();
 
             int Rolled = DiceRoll();
 
             Field steppedOn = players[turnCounter].StepForward(Rolled, ref fields);
+
+            PostData();
+
             if (steppedOn.ID < departureField.ID)
             {
                 UIWriter.WriteCrossedStart(MinFieldPriceString());
+                players[turnCounter].Money += MinFieldPrice();
+
             }
 
-
+            Console.ReadKey();
             turnCounter++;
         }
         /// <summary>
@@ -115,6 +125,18 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             }
             return minField.GetPriceString();
         }
+        private int MinFieldPrice()
+        {
+            Field minField = fields[1]; //startmezőt nem vesszük figyelembe
+            for (int i = 1; i < fields.Length; i++) //startmezőt nem vesszük figyelembe
+            {
+                if (fields[i] < minField)
+                {
+                    minField = fields[i];
+                }
+            }
+            return minField.Price;
+        }
         /// <summary>
         /// Átadja a játék adatait a UI író felé kiírásra.
         /// </summary>
@@ -139,7 +161,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
 
                 }
             }
-            Console.SetCursorPosition(0,fields.Length/4*3);
+            Console.SetCursorPosition(0,(fields.Length/4+1)*3);
             UIWriter.WriteDivider();
             for (int i = 0; i<players.Length; i++)
             {

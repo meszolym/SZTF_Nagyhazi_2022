@@ -40,7 +40,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         internal Field StepForward(int rolled, ref Field[] fields)
         {
             PlacementID += rolled;
-            if (PlacementID > fields.Length)
+            if (PlacementID >= fields.Length)
             {
                 PlacementID -= fields.Length;
             }
