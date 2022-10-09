@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Schema;
@@ -64,8 +65,16 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             {
                 if (departureField.OwnerID != -1)
                 {
-                    Player owner = players[departureField.OwnerID];
-                    Writer.PlacementBeforeRoll(departureField.GetNameString(), owner.GetName(), owner.bgColor, owner.fgColor, departureField.GetPriceString());
+                    if (departureField.OwnerID != players[turnCounter].ID)
+                    {
+                        Player owner = players[departureField.OwnerID];
+                        Writer.PlacementBeforeRoll(departureField.GetNameString(), owner.GetName(), owner.bgColor, owner.fgColor, departureField.GetPriceString());
+                    }
+                    else
+                    {
+                        Player owner = players[departureField.OwnerID];
+                        Writer.PlacementBeforeRoll(departureField.GetNameString(), "Te", owner.bgColor, owner.fgColor, departureField.GetPriceString());
+                    }
                 }
                 else
                 {
@@ -96,13 +105,22 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
 
             Writer.WriteDivider();
 
-            if (players[turnCounter].GetPlacementField(ref fields).ID != 0) //nem startmező
+            if (steppedOnField.ID != 0) //nem startmező
             {
-                if (players[turnCounter].GetPlacementField(ref fields).OwnerID != -1) //van ownere
+                if (steppedOnField.OwnerID != -1) //van ownere
                 {
-                    Player owner = players[steppedOnField.OwnerID];
-                    Writer.WritePlacementAfterRoll(steppedOnField.GetNameString(), owner.GetName(), owner.bgColor, owner.fgColor, steppedOnField.GetPriceString());
-                    Payrent(steppedOnField);
+                    if (steppedOnField.OwnerID != players[turnCounter].ID)
+                    {
+                        Player owner = players[steppedOnField.OwnerID];
+                        Writer.WritePlacementAfterRoll(steppedOnField.GetNameString(), owner.GetName(), owner.bgColor, owner.fgColor, steppedOnField.GetPriceString());
+                        Payrent(steppedOnField);
+                    }
+                    else
+                    {
+                        Player owner = players[steppedOnField.OwnerID];
+                        Writer.WritePlacementAfterRoll(steppedOnField.GetNameString(), "Te", owner.bgColor, owner.fgColor, steppedOnField.GetPriceString());
+                    }
+                   
                 }
                 else //nincs ownere
                 {
@@ -125,32 +143,31 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <param name="placement">A mező, ahol a játékos áll</param>
         private void Payrent(Field placement)
         {
-            if (players[turnCounter].ID != placement.OwnerID) //önmagának nem fizet bérletet
+
+            if (players[placement.OwnerID].inGame)
             {
-                if (players[placement.OwnerID].inGame)
+                Writer.RentPayment();
+                if (players[turnCounter].Money > placement.Price) //kifizeti
                 {
-                    Writer.RentPayment();
-                    if (players[turnCounter].Money > placement.Price) //kifizeti
-                    {
-                        players[placement.OwnerID].Money += placement.Price;
-                        players[turnCounter].Money -= placement.Price;
-                        PostPlayerStatuses();
-                    }
-                    else //csődbemegy
-                    {
-                        players[placement.OwnerID].Money += players[turnCounter].Money;
-                        players[turnCounter].Money = 0;
-                        players[turnCounter].inGame = false;
-                        remainingPlayers--;
-                        PostPlayerStatuses();
-                        Writer.WentBankrupt();
-                    }
+                    players[placement.OwnerID].Money += placement.Price;
+                    players[turnCounter].Money -= placement.Price;
+                    PostPlayerStatuses();
                 }
-                else
+                else //csődbemegy
                 {
-                    Writer.WriteNoRent();
+                    players[placement.OwnerID].Money += players[turnCounter].Money;
+                    players[turnCounter].Money = 0;
+                    players[turnCounter].inGame = false;
+                    remainingPlayers--;
+                    PostPlayerStatuses();
+                    Writer.WentBankrupt();
                 }
-            }     
+            }
+            else
+            {
+                Writer.WriteNoRent();
+            }
+
         }
         /// <summary>
         /// A mezők megvásárlásáért felel

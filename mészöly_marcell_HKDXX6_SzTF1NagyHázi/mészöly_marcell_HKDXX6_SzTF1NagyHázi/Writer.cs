@@ -17,6 +17,18 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// </summary>
         internal static void WriteWelcome()
         {
+            Console.WriteLine(" /$$      /$$                                                   /$$          ");
+            Console.WriteLine("| $$$    /$$$                                                  | $$          ");
+            Console.WriteLine("| $$$$  /$$$$  /$$$$$$  /$$$$$$$   /$$$$$$   /$$$$$$   /$$$$$$ | $$ /$$   /$$");
+            Console.WriteLine("| $$ $$/$$ $$ /$$__  $$| $$__  $$ /$$__  $$ /$$__  $$ /$$__  $$| $$| $$  | $$");
+            Console.WriteLine("| $$  $$$| $$| $$  \\ $$| $$  \\ $$| $$  \\ $$| $$  \\ $$| $$  \\ $$| $$| $$  | $$");
+            Console.WriteLine("| $$\\  $ | $$| $$  | $$| $$  | $$| $$  | $$| $$  | $$| $$  | $$| $$| $$  | $$");
+            Console.WriteLine("| $$ \\/  | $$|  $$$$$$/| $$  | $$|  $$$$$$/| $$$$$$$/|  $$$$$$/| $$|  $$$$$$$");
+            Console.WriteLine("|__/     |__/ \\______/ |__/  |__/ \\______/ | $$____/  \\______/ |__/ \\____  $$");
+            Console.WriteLine("                                           | $$                     /$$  | $$");
+            Console.WriteLine("                                           | $$                    |  $$$$$$/");
+            Console.WriteLine("                                           |__/                     \\______/ ");
+
             Console.WriteLine("Üdv az SzTF Monopolyban!");
             Console.WriteLine("A legjobb játékélmény érdekében, kérlek, teljes képernyőn jelenítsd meg a konzolt!");
         }
@@ -292,8 +304,11 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <param name="fgColor">A győztes szövegszíne</param>
         internal static void AnnounceWinner(string winner, ConsoleColor bgColor, ConsoleColor fgColor)
         {
-            Console.Write("\U0001f947 A győztes:");
+            Console.Write("\U0001f947 A győztes: ");
+            Console.BackgroundColor = bgColor;
+            Console.ForegroundColor = fgColor;
             Console.WriteLine(winner);
+            Console.ResetColor();
             Console.WriteLine("A program bezárásához nyomd meg bármely gombot.");
         }
         #endregion
