@@ -31,10 +31,43 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <param name="game">Az objektum, amibe írjuk a játékot.</param>
         private static void readInput(ref Game game)
         {
-            Writer.AskForPath();
+
             string path = string.Empty;
             path += "./Source/";
-            path += Console.ReadLine();
+            string fileFound = Path.GetFileName(TryFindFile());
+
+            if (fileFound != string.Empty)
+            {
+                Writer.AskIfFoundFileIsOk(fileFound);
+                string YesNo = Console.ReadLine();
+
+                while (YesNo != "I" && YesNo != "i" && YesNo != "N" && YesNo != "n")
+                {
+                    Writer.WriteErrorYesNoAnswer();
+                    YesNo = Console.ReadLine();
+                }
+
+                if (YesNo == "I" || YesNo == "i")
+                {
+                    path += fileFound;
+                }
+                else
+                {
+                    Writer.AskForPath();
+                    
+                    path += Console.ReadLine();
+                }
+            }
+            else
+            {
+                Writer.AskForPath();
+                path += Console.ReadLine();
+            }
+
+
+            
+
+            
 
             if (!File.Exists(path))
             {
@@ -57,6 +90,23 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             }
             Writer.WriteDivider();
             Writer.WriteSuccessfulRead();
+        }
+
+        private static string TryFindFile()
+        {
+            string[] files = Directory.GetFiles("./Source/");
+            int i = 0;
+            string fileName = string.Empty;
+            while(i < files.Length && fileName == string.Empty)
+            {
+                if (files[i].EndsWith(".txt") && !files[i].Contains("0ReadMe.txt"))
+                {
+                    fileName = files[i];
+                }
+                i++;
+            }
+            return fileName;
+
         }
     }
 }

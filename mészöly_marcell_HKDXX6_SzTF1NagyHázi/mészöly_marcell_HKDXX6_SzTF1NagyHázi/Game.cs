@@ -118,6 +118,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             Writer.AnnounceWinner(winner.Name, winner.BackgroundColor, winner.ForegroundColor);
             Console.ReadKey();
         }
+
         /// <summary>
         /// A játék egy körét futtatja le.
         /// </summary>
@@ -247,7 +248,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                 string buyYesNo = Console.ReadLine();
                 while (buyYesNo != "I" && buyYesNo != "i" && buyYesNo != "N" && buyYesNo != "n")
                 {
-                    Writer.WriteErrorBuyAnswer();
+                    Writer.WriteErrorYesNoAnswer();
                     buyYesNo = Console.ReadLine();
                 }
 

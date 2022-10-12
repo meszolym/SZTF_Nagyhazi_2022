@@ -39,6 +39,14 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         {
             Console.Write("Tedd a kiinduló fájlt a \"Source\" mappába, és itt add meg a nevét (kiterjesztéssel!): ");
         }
+        /// <summary>
+        /// Tájékoztatja a játékost, hogy a program talált egy fájlt a kiinduó mappában, így ezt is tekinthetjük kiinduló fájlnak, illetve tájékoztatja a döntésének bekéréséről.
+        /// </summary>
+        /// <param name="fileFound">Talált kiinduló fájl neve</param>
+        internal static void AskIfFoundFileIsOk(string fileFound)
+        {
+            Console.Write($"Találtunk egy fájlt ({fileFound}) a \"Source\" mappában. Indítsuk ezzel a játékot? (I/N): ");
+        }
 
         /// <summary>
         /// Tájékoztatja a felhasználót a kialakult hibáról.
@@ -69,6 +77,15 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         {
             Console.WriteLine("---");
         }
+
+        /// <summary>
+        /// Tájékoztatja a játékost, hogy az igen/nem választ nem megfelelően adta meg, illetve tájékoztatja az újabb bekérésről.
+        /// </summary>
+        public static void WriteErrorYesNoAnswer()
+        {
+            Console.Write("Nem megfelelő válasz. Próbálkozz újra: ");
+        }
+
         #endregion
 
         #region Táblához és fejléchez tartozó elemek
@@ -176,6 +193,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <summary>
         /// Tájékoztatja a játékost a dobott értékről.
         /// </summary>
+        /// <param name="startingFieldName">Kiindulási mező "neve"</param>
         /// <param name="rolledvalue">A dobott érték</param>
         public static void WriteRolledValue(string startingFieldName, int rolledvalue)
         {
@@ -241,14 +259,6 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         public static void AskBuyQuestion()
         {
             Console.Write("🏨 Mező megvétele? (I/N): ");
-        }
-
-        /// <summary>
-        /// Tájékoztatja a játékost, hogy a vásárlási szándékot nem megfelelően adta meg, illetve tájékoztatja az újabb bekérésről.
-        /// </summary>
-        public static void WriteErrorBuyAnswer()
-        {
-            Console.Write("Nem megfelelő válasz. Próbálkozz újra: ");
         }
 
         /// <summary>
