@@ -113,9 +113,27 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                     turnCounter = 0;
                 }
             }
+
+            for (int i = 0; i<players.Length; i++)
+            {
+                if (players[i].InGame)
+                {
+                    if (players[i].ID != GetWinner().ID)
+                    {
+                        players[i].Money = 0; //kiléptetés a játékból
+                        players[i].FinishedAt = 2;
+                    }
+                    else
+                    {
+                        players[i].Money = 0; //kiléptetés a játékból
+                        players[i].FinishedAt = 1;
+                    }
+                }
+            }
+
             Console.Clear();
 
-            PostFinishData();
+            PostRankingData();
             
             Console.ReadKey();
         }
@@ -297,42 +315,27 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             return MaxPlayer;            
         }
 
-        private void PostFinishData()
+        private void PostRankingData()
         {
 
-            int[] FinishedAts = new int[players.Length];
-            Player winner = GetWinner();
-            
+            int[] PlayersFields = GetPlayersFields();
+            int[] Ranking = new int[players.Length];
+
             for (int i = 0; i < players.Length; i++)
             {
-                if (!players[i].InGame)
-                {
-                    FinishedAts[players[i].FinishedAt-1] = players[i].ID;
-                }
-                else
-                {
-                    if (winner.ID == players[i].ID)
-                    {
-                        FinishedAts[0] = players[i].ID;
-                    }
-                    else
-                    {
-                        FinishedAts[1] = players[i].ID;
-                    }
-                }
+                Ranking[players[i].FinishedAt - 1] = players[i].ID;
             }
 
-            int[] PlayersFields = GetPlayersFields();
-
-            for (int i = 0; i<FinishedAts.Length; i++)
+            for (int i = 0; i < Ranking.Length; i++)
             {
-                Player p = players[FinishedAts[i]];
-                
-                Writer.AnnounceFinishers(i+1, p.Name, PlayersFields[p.ID] ,p.BackgroundColor, p.ForegroundColor);
+                Writer.AnnounceFinishers(i+1, players[Ranking[i]].Name, PlayersFields[Ranking[i]], players[Ranking[i]].BackgroundColor, players[Ranking[i]].ForegroundColor);
             }
 
         }
-
+        /// <summary>
+        /// Megadja, hogy mely játékosnak hány mező volt a birtokában
+        /// </summary>
+        /// <returns>int[], amely ID helyesn tartalmazza a mezők darabszámát játékosonként</returns>
         private int[] GetPlayersFields()
         {
             int[] fieldCounts = new int[players.Length];
