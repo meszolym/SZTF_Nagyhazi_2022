@@ -34,7 +34,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
 
             string path = string.Empty;
             path += "./Source/";
-            string fileFound = Path.GetFileName(TryFindFile());
+            string fileFound = TryFindFile();
 
             if (fileFound != string.Empty)
             {
@@ -63,10 +63,6 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                 Writer.AskForPath();
                 path += Console.ReadLine();
             }
-
-
-            
-
             
 
             if (!File.Exists(path))
@@ -91,7 +87,10 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             Writer.WriteDivider();
             Writer.WriteSuccessfulRead();
         }
-
+        /// <summary>
+        /// Megpróbál bemeneti fájlt keresni a Source mappában.
+        /// </summary>
+        /// <returns>string - a megtalált fájl neve, ha van</returns>
         private static string TryFindFile()
         {
             string[] files = Directory.GetFiles("./Source/");
@@ -105,7 +104,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                 }
                 i++;
             }
-            return fileName;
+            return Path.GetFileName(fileName);
 
         }
     }

@@ -331,7 +331,9 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             Console.WriteLine($"{playerName} - ({FieldNum} db mező)");
             Console.ResetColor();
         }
-
+        /// <summary>
+        /// Bejelenti a játék végét.
+        /// </summary>
         public static void AnnounceEnd()
         {
             Console.WriteLine("A játék végetért.");
