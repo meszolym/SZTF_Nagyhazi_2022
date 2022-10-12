@@ -24,12 +24,16 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         public int Money 
         { 
             get { return money; } 
-            set { 
+            set {
+                if (inGame)
+                {
                     money = value;
                     if (money <= 0)
                     {
                         InGame = false;
                     }
+                }
+                    
             }
         }
 
@@ -65,9 +69,9 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         public Player(int id, int money, ConsoleColor bgColor, ConsoleColor fgColor)
         {
             this.id = id;
+            this.inGame = true;
             Money = money;
             placementID = 0;
-            this.inGame = true;
             this.bgColor = bgColor;
             this.fgColor = fgColor;
         }
