@@ -33,6 +33,15 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             this.remainingPlayers = players.Length;
         }
 
+        public static Game Parse(string input)
+        {
+            Game game = new Game();
+            
+            //ezt kialakítani az inputreader helyetts
+
+            return game;
+        }
+
         /// <summary>
         /// A játék futtatásáért felel.
         /// </summary>
