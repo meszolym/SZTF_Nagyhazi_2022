@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
 {
-    internal class Writer
+    public class Writer
     {
-        static internal ConsoleColor BaseBgColor;
-        static internal ConsoleColor BaseFgColor;
+        static public ConsoleColor BaseBgColor;
+        static public ConsoleColor BaseFgColor;
 
         #region indítás és fájlbeolvasás
         /// <summary>
         /// Kiírja az üdvözlést
         /// </summary>
-        internal static void WriteWelcome()
+        public static void WriteWelcome()
         {
             Console.WriteLine(" /$$      /$$                                                   /$$          ");
             Console.WriteLine("| $$$    /$$$                                                  | $$          ");
@@ -35,7 +35,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <summary>
         /// Tájékoztatja a felhasználót a kiinduló fájl nevének bekéréséről.
         /// </summary>
-        internal static void AskForPath()
+        public static void AskForPath()
         {
             Console.Write("Tedd a kiinduló fájlt a \"Source\" mappába, és itt add meg a nevét (kiterjesztéssel!): ");
         }
@@ -44,7 +44,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// Tájékoztatja a felhasználót a kialakult hibáról.
         /// </summary>
         /// <param name="errorDesc">Hiba leírása</param>
-        internal static void WriteError(string errorDesc)
+        public static void WriteError(string errorDesc)
         {
             Console.WriteLine($"Hiba: {errorDesc}");
             Console.WriteLine("A program bezárásához nyomd meg bármely gombot");
@@ -53,7 +53,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <summary>
         /// Tájékoztatja a felhasználót a beolvasás sikerességéről.
         /// </summary>
-        internal static void WriteSuccessfulRead()
+        public static void WriteSuccessfulRead()
         {
             Console.WriteLine("Sikeres beolvasás! A továbblépéshez nyomd meg bármely gombot.");
             Console.ReadKey();
@@ -65,7 +65,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <summary>
         /// Kiír egy elválasztót
         /// </summary>
-        internal static void WriteDivider()
+        public static void WriteDivider()
         {
             Console.WriteLine("---");
         }
@@ -79,7 +79,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <param name="playerMoney">Játékos pénzösszege</param>
         /// <param name="BgColor">Játékos háttérszíne</param>
         /// <param name="FgColor">Játékos szövegszíne</param>
-        internal static void WritePlayerStatus(string playerName, string playerMoney, ConsoleColor BgColor, ConsoleColor FgColor)
+        public static void WritePlayerStatus(string playerName, string playerMoney, ConsoleColor BgColor, ConsoleColor FgColor)
         {
             Console.BackgroundColor = BgColor;
             Console.ForegroundColor = FgColor;
@@ -97,7 +97,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <param name="left">A konzol bal oldalától való távolság</param>
         /// <param name="top">A konzol tetejétől való távolság</param>
 
-        internal static void WriteFieldToBoard(string topRow, string flag, ConsoleColor flagBgColor, ConsoleColor flagFgColor, int left, int top)
+        public static void WriteFieldToBoard(string topRow, string flag, ConsoleColor flagBgColor, ConsoleColor flagFgColor, int left, int top)
         {
             Console.SetCursorPosition(left, top);
             Console.Write(topRow);
@@ -119,7 +119,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <param name="top">A konzol tetejétől való távolság (A mezőhöz képest +1)</param>
         /// <param name="BgColor">A játékos háttérszíne</param>
         /// <param name="FgColor">A játékos szövegszíne</param>
-        internal static void WritePlayerOnField(string num, int left, int top, ConsoleColor BgColor, ConsoleColor FgColor)
+        public static void WritePlayerOnField(string num, int left, int top, ConsoleColor BgColor, ConsoleColor FgColor)
         {
             Console.SetCursorPosition(left, top);
             Console.BackgroundColor = BgColor;
@@ -134,7 +134,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <param name="playername">A játékos neve</param>
         /// <param name="BgColor">A játékos háttérszíne</param>
         /// <param name="FgColor">A játékos szövegszíne</param>
-        internal static void WritePlayerRound(string playername, ConsoleColor BgColor, ConsoleColor FgColor)
+        public static void WritePlayerRound(string playername, ConsoleColor BgColor, ConsoleColor FgColor)
         {
             Console.BackgroundColor = BgColor;
             Console.ForegroundColor = FgColor;
@@ -152,7 +152,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <param name="ownerBgColor">A mező birtokosának háttérszíne</param>
         /// <param name="ownerFgColor">A mező birtokosának szövegszíne</param>
         /// <param name="priceString">A mező árának szövege</param>
-        internal static void PlacementBeforeRoll(string fieldName, string ownerName, ConsoleColor ownerBgColor, ConsoleColor ownerFgColor, string priceString)
+        public static void PlacementBeforeRoll(string fieldName, string ownerName, ConsoleColor ownerBgColor, ConsoleColor ownerFgColor, string priceString)
         {
             Console.WriteLine($"📍 Aktuális mező, ahol állsz: {fieldName}");
             Console.WriteLine($"📈 Ára: {priceString}");
@@ -167,7 +167,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// Kiírja a játékos lépés előtti státuszát, a mező tulajdonságai nélkül, amin áll.
         /// </summary>
         /// <param name="fieldName">A mező "neve"</param>
-        internal static void PlacementBeforeRoll(string fieldName)
+        public static void PlacementBeforeRoll(string fieldName)
         {
             Console.WriteLine($"📍 Aktuális mező, ahol állsz: {fieldName}");
             Console.WriteLine("🎲 Dobáshoz nyomd meg bármely gombot.");
@@ -177,7 +177,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// Tájékoztatja a játékost a dobott értékről.
         /// </summary>
         /// <param name="rolledvalue">A dobott érték</param>
-        internal static void WriteRolledValue(string startingFieldName, int rolledvalue)
+        public static void WriteRolledValue(string startingFieldName, int rolledvalue)
         {
             Console.WriteLine($"📍 Mező, ahonnan indultál: {startingFieldName}");
             Console.WriteLine($"🎲 Dobott érték: {rolledvalue}");
@@ -187,7 +187,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// Tájékoztatja a játékost, hogy át-/rálépett a startmezőn/-re, illetve a jutalmáról.
         /// </summary>
         /// <param name="prize">Az átlépés jutalma</param>
-        internal static void WriteCrossedStart(string prize)
+        public static void WriteCrossedStart(string prize)
         {
             Console.WriteLine($"🤑 Át-/ráléptél a start mezőn/-re így jutalmad: {prize}");
         }
@@ -196,7 +196,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// Kiírja a játékos lépés utáni státuszát, a mező tulajdonságai nélkül, amire érkezett.
         /// </summary>
         /// <param name="fieldName">A mező "neve"</param>
-        internal static void WritePlacementAfterRoll(string fieldName)
+        public static void WritePlacementAfterRoll(string fieldName)
         {
             Console.WriteLine($"📍 Mező, ahova léptél: {fieldName}");
             Console.WriteLine("⏩ A továbblépéshez nyomd meg bármelyik gombot.");
@@ -211,7 +211,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <param name="ownerBgColor">A mező birtokosának háttérszíne</param>
         /// <param name="ownerFgColor">A mező birtokosának szövegszíne</param>
         /// <param name="priceString">A mező ára</param>
-        internal static void WritePlacementAfterRoll(string fieldName, string ownerName, ConsoleColor ownerBgColor, ConsoleColor ownerFgColor, string priceString)
+        public static void WritePlacementAfterRoll(string fieldName, string ownerName, ConsoleColor ownerBgColor, ConsoleColor ownerFgColor, string priceString)
         {
             Console.WriteLine($"📍 Mező, ahova léptél: {fieldName}");
             Console.WriteLine($"📈 Ára: {priceString}");
@@ -225,7 +225,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <summary>
         /// Tájékoztatja a játékost, hogy a köre véget ért.
         /// </summary>
-        internal static void WriteEndOfRound()
+        public static void WriteEndOfRound()
         {
             Console.WriteLine("🛑 A köröd véget ért.");
             Console.WriteLine("⏩ A továbblépéshez nyomd meg bármelyik gombot.");
@@ -238,7 +238,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <summary>
         /// Tájékoztatja a játékost a vásárlási szándék bekéréséről.
         /// </summary>
-        internal static void AskBuyQuestion()
+        public static void AskBuyQuestion()
         {
             Console.Write("🏨 Mező megvétele? (I/N): ");
         }
@@ -246,7 +246,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <summary>
         /// Tájékoztatja a játékost, hogy a vásárlási szándékot nem megfelelően adta meg, illetve tájékoztatja az újabb bekérésről.
         /// </summary>
-        internal static void WriteErrorBuyAnswer()
+        public static void WriteErrorBuyAnswer()
         {
             Console.Write("Nem megfelelő válasz. Próbálkozz újra: ");
         }
@@ -254,7 +254,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <summary>
         /// Tájékoztatja a játékost, hogy az adott mezőt nem tudja megvenni pénz hiányában.
         /// </summary>
-        internal static void WriteCannotBuy()
+        public static void WriteCannotBuy()
         {
             Console.WriteLine("😢 Nincs pézed megvenni ezt a mezőt.");
         }
@@ -262,14 +262,14 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <summary>
         /// Tájékoztatja a játékost a vásárlás sikerességéről, és az ár levonásáról.
         /// </summary>
-        internal static void WriteBoughtField()
+        public static void WriteBoughtField()
         {
             Console.WriteLine("💸 A mezőt megvetted. Az összeget levontuk a számládról.");
         }
         /// <summary>
         /// Tájékoztatja a játékost, hogy a mezőt nem vásárolta meg.
         /// </summary>
-        internal static void WriteNotBoughtField()
+        public static void WriteNotBoughtField()
         {
             Console.WriteLine("🙅 A mezőt nem vetted meg.");
         }
@@ -280,7 +280,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <summary>
         /// Tájékoztatja a játékost, hogy a mező bérleti díja levonásra került a számlájáról.
         /// </summary>
-        internal static void RentPayment()
+        public static void RentPayment()
         {
             Console.WriteLine($"💸 Mivel ráléptél, a mező árát átutaltuk a birtokosnak.");
         }
@@ -288,7 +288,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <summary>
         /// Tájékoztatja a játékost, hogy az adott mezőn nem kell bérleti díjat fizessen, mert a tulajdonosa kiesett a játékból.
         /// </summary>
-        internal static void WriteNoRent()
+        public static void WriteNoRent()
         {
             Console.WriteLine("🤑 Mivel a birtokos már kiesett a játékból, így nem kell fizetned.");
         }
@@ -297,7 +297,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// Tájékoztatja a játékost, hogy csődbe ment.
         /// </summary>
         /// 
-        internal static void WentBankrupt()
+        public static void WentBankrupt()
         {
             Console.WriteLine("📉 Erre sajnos nem volt elég pénzed, így csődbe mentél.");
         }
@@ -310,7 +310,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <param name="winner">A győztes "neve"</param>
         /// <param name="bgColor">A győztes háttérszíne</param>
         /// <param name="fgColor">A győztes szövegszíne</param>
-        internal static void AnnounceWinner(string winner, ConsoleColor bgColor, ConsoleColor fgColor)
+        public static void AnnounceWinner(string winner, ConsoleColor bgColor, ConsoleColor fgColor)
         {
             Console.Write("\U0001f947 A győztes: ");
             Console.BackgroundColor = bgColor;

@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
 {
-    internal class InputReader
+    public class InputReader
     {
-        internal string path;
-        internal Game game;
-        internal string errorDesc;
-        internal StreamReader sr;
-        internal InputReader(string Path)
+        public string path;
+        public Game game;
+        public string errorDesc;
+        public StreamReader sr;
+        public InputReader(string Path)
         {
             path = Path;
             game = new Game();
@@ -25,7 +25,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// Az játékadatok beolvasásának futtatásáért felel.
         /// </summary>
         /// <returns>Game - a létrehozott játék</returns>
-        internal Game ReadGame()
+        public Game ReadGame()
         {
             if (!FetchFile())
             {

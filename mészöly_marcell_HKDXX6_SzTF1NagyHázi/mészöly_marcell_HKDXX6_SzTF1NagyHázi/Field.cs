@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
 {
-    internal class Field
+    public class Field
     {
         
-        internal const int Height = 3; //kiírási magasság
-        internal const int Width = 9; //kiírási szélesség, beleszámítva egy szóköz elválasztást
-        internal int ID;
-        internal int Price;
-        internal int OwnerID;
+        public const int Height = 3; //kiírási magasság
+        public const int Width = 9; //kiírási szélesség, beleszámítva egy szóköz elválasztást
+        public int ID;
+        public int Price;
+        public int OwnerID;
         /*
          * -1 = No owner
          * 0 = Player1
@@ -22,10 +22,10 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
          * 2 = Player3
          * 3 = Player4
          */
-        internal int BoardPlacementLeft;
-        internal int BoardPlacementTop;
+        public int BoardPlacementLeft;
+        public int BoardPlacementTop;
 
-        internal Field(int id, int price, int ownerID)
+        public Field(int id, int price, int ownerID)
         {
             ID = id;
             Price = price;
@@ -55,7 +55,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// Megadja a mező árát mértékegységgel.
         /// </summary>
         /// <returns>String - A mező ára mértékegységgel</returns>
-        internal string GetPriceString()
+        public string GetPriceString()
         {
             if (ID == 0)
             {
@@ -68,7 +68,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// Megadja a mező "nevét".
         /// </summary>
         /// <returns>String - A mező "neve"</returns>
-        internal string GetNameString()
+        public string GetNameString()
         {
             if (ID == 0)
             {
@@ -81,7 +81,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// Megadja egy mező jobb felső sarkában feltüntetendő Flag-et.
         /// </summary>
         /// <returns>string - a Flag</returns>
-        internal string GetFlag()
+        public string GetFlag()
         {
             if (ID == 0)
             {
@@ -97,7 +97,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// Megadja a mező kiírásakor használandó felső border sort, a flag nélkül.
         /// </summary>
         /// <returns>String - A mező felső border sora</returns>
-        internal string GetTop()
+        public string GetTop()
         {
             string flag = GetFlag();
             if (flag.Length == 1)
@@ -115,7 +115,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// </summary>
         /// <param name="players">A játékosokat tartalmazó tömb</param>
         /// <returns>int[] - A mezőn álló játékosok</returns>
-        internal Player[] GetPlayersOnField(ref Player[] players)
+        public Player[] GetPlayersOnField(ref Player[] players)
         {
             
             int db = 0;

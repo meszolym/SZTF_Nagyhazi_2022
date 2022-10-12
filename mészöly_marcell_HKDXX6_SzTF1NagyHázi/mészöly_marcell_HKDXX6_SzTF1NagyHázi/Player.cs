@@ -6,22 +6,22 @@ using System.Threading.Tasks;
 
 namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
 {
-    internal class Player
+    public class Player
     {
-        internal int ID;
+        public int ID;
         /*
          * 0 = Player1
          * 1 = Player2
          * 2 = Player3
          * 3 = Player4
          */
-        internal int Money;
-        internal int PlacementID;
-        internal bool inGame;
-        internal ConsoleColor bgColor;
-        internal ConsoleColor fgColor;
+        public int Money;
+        public int PlacementID;
+        public bool inGame;
+        public ConsoleColor bgColor;
+        public ConsoleColor fgColor;
 
-        internal Player(int id, int money, int placement, bool inGame, ConsoleColor bgColor, ConsoleColor fgColor)
+        public Player(int id, int money, int placement, bool inGame, ConsoleColor bgColor, ConsoleColor fgColor)
         {
             ID = id;
             Money = money;
@@ -37,7 +37,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <param name="rolled">A megtenni kívánt lépések száma</param>
         /// <param name="fields">A mezőket tartalmazó tömb</param>
         /// <returns>Field - A mező, ahova a játékos érkezett</returns>
-        internal Field StepForward(int rolled, ref Field[] fields)
+        public Field StepForward(int rolled, ref Field[] fields)
         {
             PlacementID += rolled;
             if (PlacementID >= fields.Length)
@@ -52,12 +52,12 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// </summary>
         /// <param name="fields">A mezők tömbje.</param>
         /// <returns>Field - A mező</returns>
-        internal Field GetPlacementField(ref Field[] fields)
+        public Field GetPlacementField(ref Field[] fields)
         {
             return fields[PlacementID];
         }
 
-        internal string GetName()
+        public string GetName()
         {
             return $"{ID + 1}. játékos";
         }

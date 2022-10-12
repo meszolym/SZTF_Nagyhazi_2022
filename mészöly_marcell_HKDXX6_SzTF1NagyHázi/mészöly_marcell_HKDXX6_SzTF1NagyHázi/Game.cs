@@ -8,13 +8,13 @@ using System.Xml.Schema;
 
 namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
 {
-    internal class Game
+    public class Game
     {
-        internal Field[] fields;
-        internal Player[] players;
+        public Field[] fields;
+        public Player[] players;
         private int turnCounter;
         private int remainingPlayers;
-        internal Game()
+        public Game()
         {
             this.fields = null;
             this.players = new Player[4];
@@ -25,7 +25,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <summary>
         /// A játék futtatásáért felel.
         /// </summary>
-        internal void Run()
+        public void Run()
         {
 
             while (remainingPlayers > 2)
