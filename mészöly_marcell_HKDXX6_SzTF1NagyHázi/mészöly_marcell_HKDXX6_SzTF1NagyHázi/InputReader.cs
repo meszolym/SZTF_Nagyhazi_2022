@@ -155,22 +155,22 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                 if (i < dim) //felső sorban lesz
                 {
                     game.fields[i].BoardPlacementLeft = i * Field.Width;
-                    game.fields[i].BoardPlacementTop = 0;
+                    game.fields[i].boardPlacementTop = 0;
                 }
                 else if (i < dim * 2) //jobb oldali oszlopban lesz
                 {
                     game.fields[i].BoardPlacementLeft = (dim) * Field.Width;
-                    game.fields[i].BoardPlacementTop = Field.Height * (i - dim);
+                    game.fields[i].boardPlacementTop = Field.Height * (i - dim);
                 }
                 else if (i < dim * 3) //alsó sorban lesz
                 {
                     game.fields[i].BoardPlacementLeft = (dim * 3 - i) * Field.Width;
-                    game.fields[i].BoardPlacementTop = Field.Height * (dim);
+                    game.fields[i].boardPlacementTop = Field.Height * (dim);
                 }
                 else //(i < dim * 4) bal oldali oszlopban lesz
                 {
                     game.fields[i].BoardPlacementLeft = 0;
-                    game.fields[i].BoardPlacementTop = Field.Height * (dim * 4 - i);
+                    game.fields[i].boardPlacementTop = Field.Height * (dim * 4 - i);
                 }
             }
 

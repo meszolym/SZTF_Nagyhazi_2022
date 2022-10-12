@@ -12,8 +12,18 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         
         public const int Height = 3; //kiírási magasság
         public const int Width = 9; //kiírási szélesség, beleszámítva egy szóköz elválasztást
-        public int ID;
-        public int Price;
+        private int id;
+        public int ID
+        {
+            get { return id; }
+        }
+        private int price;
+
+        public int Price
+        {
+            get { return price; }
+        }
+
         public int OwnerID;
         /*
          * -1 = No owner
@@ -22,13 +32,22 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
          * 2 = Player3
          * 3 = Player4
          */
-        public int BoardPlacementLeft;
-        public int BoardPlacementTop;
 
-        public Field(int id, int price, int ownerID)
+        private int boardPlacementLeft;
+        public int BoardPlacementLeft
         {
-            ID = id;
-            Price = price;
+            get { return boardPlacementLeft; }
+        }
+        private int boardPlacementTop;
+        public int BoardPlacementTop
+        {
+            get { return boardPlacementTop; }
+        }
+
+        public Field(int _id, int price, int ownerID)
+        {
+            id = _id;
+            this.price = price;
             OwnerID = ownerID;
         }
         /// <summary>
@@ -39,7 +58,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <returns>Bool - True, ha a ára nagyobb mint b ára, false, ha nem</returns>
         public static bool operator >(Field a, Field b)
         {
-            return a.Price > b.Price;
+            return a.price > b.price;
         }
         /// <summary>
         /// Összehasonlítja két mező árát.
@@ -49,7 +68,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <returns>Bool - True, ha b ára nagyobb mint a ára, false, ha nem</returns>
         public static bool operator <(Field a, Field b)
         {
-            return a.Price < b.Price;
+            return a.price < b.price;
         }
         /// <summary>
         /// Megadja a mező árát mértékegységgel.
@@ -61,7 +80,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             {
                 return string.Empty;
             }
-            return $"{Price} $";
+            return $"{price} $";
         }
 
         /// <summary>

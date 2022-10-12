@@ -10,8 +10,19 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
 {
     public class Game
     {
-        public Field[] fields;
-        public Player[] players;
+        private Field[] fields;
+
+        public Field[] Fields
+        {
+            get { return fields; }
+        }
+
+        private Player[] players;
+        public Player[] Players
+        {
+            get { return players; }
+        }
+
         private int turnCounter;
         private int remainingPlayers;
         public Game()
