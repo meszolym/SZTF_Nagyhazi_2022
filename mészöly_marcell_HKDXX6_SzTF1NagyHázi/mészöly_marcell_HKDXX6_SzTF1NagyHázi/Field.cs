@@ -9,7 +9,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
 {
     public class Field
     {
-        
+
         public const int Height = 3; //kiírási magasság
         public const int Width = 9; //kiírási szélesség, beleszámítva egy szóköz elválasztást
         private int id;
@@ -17,14 +17,36 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         {
             get { return id; }
         }
-        private int price;
+
+        public string Name
+        {
+            get
+            {
+                if (ID == 0)
+                {
+                    return "🏁 Startmező";
+                }
+                return $"{ID}. mező";
+            }
+        }
+
+        private readonly int price;
 
         public int Price
         {
             get { return price; }
         }
 
-        public int OwnerID;
+        public string PriceString { get {
+                if (ID == 0)
+                {
+                    return string.Empty;
+                }
+                return $"{price} $";
+            }
+        }
+
+        private int ownerID;
         /*
          * -1 = No owner
          * 0 = Player1
@@ -32,6 +54,21 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
          * 2 = Player3
          * 3 = Player4
          */
+
+        public int OwnerID { get { return ownerID; } private set { ownerID = value; } }
+
+        public string Flag { get {
+                if (ID == 0)
+                {
+                    return "S";
+                }
+                if (OwnerID != -1)
+                {
+                    return $"{ID}🏨";
+                }
+                return ID.ToString();
+            }
+        }
 
         private int boardPlacementLeft;
         public int BoardPlacementLeft
@@ -48,7 +85,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         {
             id = _id;
             this.price = price;
-            OwnerID = ownerID;
+            this.ownerID = ownerID;
         }
         /// <summary>
         /// Összehasonlítja két mező árát.
@@ -117,59 +154,16 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         }
 
         /// <summary>
-        /// Megadja a mező árát mértékegységgel.
-        /// </summary>
-        /// <returns>String - A mező ára mértékegységgel</returns>
-        public string GetPriceString()
-        {
-            if (ID == 0)
-            {
-                return string.Empty;
-            }
-            return $"{price} $";
-        }
-
-        /// <summary>
-        /// Megadja a mező "nevét".
-        /// </summary>
-        /// <returns>String - A mező "neve"</returns>
-        public string GetNameString()
-        {
-            if (ID == 0)
-            {
-                return "🏁 Startmező";
-            }
-            return $"{ID}. mező";
-        }
-
-        /// <summary>
-        /// Megadja egy mező jobb felső sarkában feltüntetendő Flag-et.
-        /// </summary>
-        /// <returns>string - a Flag</returns>
-        public string GetFlag()
-        {
-            if (ID == 0)
-            {
-                return "S";
-            }
-            if (OwnerID != -1)
-            {
-                return $"{ID}🏨";
-            }
-            return ID.ToString();
-        }
-        /// <summary>
         /// Megadja a mező kiírásakor használandó felső border sort, a flag nélkül.
         /// </summary>
         /// <returns>String - A mező felső border sora</returns>
         public string GetTop()
         {
-            string flag = GetFlag();
-            if (flag.Length == 1)
+            if (Flag.Length == 1)
             {
                 return $"┌─────┤";
             }
-            if (flag.Length == 2)
+            if (Flag.Length == 2)
             {
                 return $"┌────┤";
             }

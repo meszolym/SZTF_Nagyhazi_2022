@@ -8,24 +8,53 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
 {
     public class Player
     {
-        public int ID;
+        private readonly int id;
         /*
          * 0 = Player1
          * 1 = Player2
          * 2 = Player3
          * 3 = Player4
          */
-        public int Money;
-        public int PlacementID;
-        public bool inGame;
-        public ConsoleColor bgColor;
-        public ConsoleColor fgColor;
+        public int ID { get { return id; } }
 
+        public string Name { get { return $"{ID + 1}. játékos"; } }
+
+        private int money;
+
+        public int Money 
+        { 
+            get { return money; } 
+            set { 
+                money = value; 
+                if (money <= 0)
+                {
+                    InGame = false;
+                }
+            }
+        }
+
+        private int placementID;
+        public int PlacementID { get { return placementID; } }
+        private bool inGame;
+        public bool InGame
+        {
+            get { return inGame; }
+            private set
+            {
+                if (Money <= 0)
+                { inGame = value; }
+            }
+        }
+
+        private readonly ConsoleColor bgColor;
+        public ConsoleColor BackgroundColor { get { return bgColor; } }
+        private readonly ConsoleColor fgColor;
+        public ConsoleColor ForegroundColor { get { return fgColor; } }
         public Player(int id, int money, ConsoleColor bgColor, ConsoleColor fgColor)
         {
-            ID = id;
+            this.id = id;
             Money = money;
-            PlacementID = 0;
+            placementID = 0;
             this.inGame = true;
             this.bgColor = bgColor;
             this.fgColor = fgColor;
@@ -37,29 +66,13 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <param name="rolled">A megtenni kívánt lépések száma</param>
         /// <param name="fields">A mezőket tartalmazó tömb</param>
         /// <returns>Field - A mező, ahova a játékos érkezett</returns>
-        public Field StepForward(int rolled, ref Field[] fields)
+        public void StepForward(int rolled, int FieldsMax)
         {
-            PlacementID += rolled;
-            if (PlacementID >= fields.Length)
+            placementID += rolled;
+            if (placementID >= FieldsMax)
             {
-                PlacementID -= fields.Length;
+                placementID -= FieldsMax;
             }
-            return fields[PlacementID];
-        }
-
-        /// <summary>
-        /// Megadja a mezőt, ahol a játékos áll.
-        /// </summary>
-        /// <param name="fields">A mezők tömbje.</param>
-        /// <returns>Field - A mező</returns>
-        public Field GetPlacementField(ref Field[] fields)
-        {
-            return fields[PlacementID];
-        }
-
-        public string GetName()
-        {
-            return $"{ID + 1}. játékos";
         }
 
     }
