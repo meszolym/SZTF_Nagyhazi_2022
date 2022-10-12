@@ -199,5 +199,16 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             return result;
         }
 
+        /// <summary>
+        /// A mező birtoklásának rögzítéséért felel
+        /// </summary>
+        /// <param name="player">A vásárló</param>
+        public void Buy(ref Player player)
+        {
+            player.Money -= Price;
+            OwnerID = player.ID;
+
+        }
+
     }
 }

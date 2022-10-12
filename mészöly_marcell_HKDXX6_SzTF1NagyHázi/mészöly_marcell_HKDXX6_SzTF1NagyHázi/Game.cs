@@ -192,7 +192,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                 else //nincs ownere
                 {
                     Writer.WritePlacementAfterRoll(steppedOnField.Name, "Nincs", Writer.BaseBgColor,Writer.BaseFgColor, steppedOnField.PriceString);
-                    BuyField(steppedOnField);
+                    BuyField(ref steppedOnField);
                 }
             }
             else //startmező
@@ -239,7 +239,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// A mezők megvásárlásáért felel
         /// </summary>
         /// <param name="placement">A mező, ahol a játékos áll</param>
-        private void BuyField(Field placement)
+        private void BuyField(ref Field placement)
         {
             if (players[turnCounter].Money > placement.Price) //megveheti
             {
@@ -253,8 +253,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
 
                 if (buyYesNo == "I" || buyYesNo == "i")
                 {
-                    players[turnCounter].Money -= placement.Price;
-                    placement.OwnerID = turnCounter;
+                    placement.Buy(ref players[turnCounter]);
                     Writer.WriteBoughtField();
                     PostData(reDraw: true);
                 }
