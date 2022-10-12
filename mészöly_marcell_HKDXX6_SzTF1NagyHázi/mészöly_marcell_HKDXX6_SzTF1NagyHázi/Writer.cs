@@ -314,19 +314,27 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         #endregion
 
         #region játék végéhez tartozó elemek
+
         /// <summary>
-        /// Bejelenti a győztest.
+        /// Bejelenti a játékosok helyezéseit.
         /// </summary>
-        /// <param name="winner">A győztes "neve"</param>
-        /// <param name="bgColor">A győztes háttérszíne</param>
-        /// <param name="fgColor">A győztes szövegszíne</param>
-        public static void AnnounceWinner(string winner, ConsoleColor bgColor, ConsoleColor fgColor)
+        /// <param name="FinishedAt">A játékos helyezése</param>
+        /// <param name="playerName">A játékos "neve"</param>
+        /// <param name="FieldNum">A játékos mezőinek darabszáma</param>
+        /// <param name="bgColor">A játékos háttérszíne</param>
+        /// <param name="fgColor">A játékos szövegszíne</param>
+        public static void AnnounceFinishers(int FinishedAt, string playerName, int FieldNum, ConsoleColor bgColor, ConsoleColor fgColor)
         {
-            Console.Write("\U0001f947 A győztes: ");
+            Console.Write($"{FinishedAt}. helyezett: ");
             Console.BackgroundColor = bgColor;
             Console.ForegroundColor = fgColor;
-            Console.WriteLine(winner);
+            Console.WriteLine($"{playerName} - ({FieldNum} db mező)");
             Console.ResetColor();
+        }
+
+        public static void AnnounceEnd()
+        {
+            Console.WriteLine("A játék végetért.");
             Console.WriteLine("A program bezárásához nyomd meg bármely gombot.");
         }
         #endregion

@@ -25,11 +25,11 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         { 
             get { return money; } 
             set { 
-                money = value; 
-                if (money <= 0)
-                {
-                    InGame = false;
-                }
+                    money = value;
+                    if (money <= 0)
+                    {
+                        InGame = false;
+                    }
             }
         }
 
@@ -43,6 +43,18 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             {
                 if (Money <= 0)
                 { inGame = value; }
+            }
+        }
+
+        private int finishedAt;
+        public int FinishedAt
+        {
+            get { return finishedAt; }
+            set { 
+                if (!inGame)
+                {
+                    finishedAt = value;
+                }
             }
         }
 
@@ -73,6 +85,8 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                 placementID -= FieldsMax;
             }
         }
+
+
 
     }
 }

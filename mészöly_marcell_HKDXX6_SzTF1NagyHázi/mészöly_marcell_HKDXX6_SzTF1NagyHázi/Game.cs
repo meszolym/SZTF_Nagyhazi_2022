@@ -44,13 +44,13 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             string[] inputDivided = input.Split("\r\n");
 
             ConsoleColor[,] colorSchemas = new ConsoleColor[4, 2]
-{
+            {
                 {ConsoleColor.Red,ConsoleColor.White},
                 {ConsoleColor.Blue,ConsoleColor.White},
                 {ConsoleColor.DarkGreen,ConsoleColor.Yellow},
                 {ConsoleColor.White,ConsoleColor.Black}
-    //{backcolor, forecolor}
-};
+                //{backcolor, forecolor}
+            };
 
             Player[] players = new Player[4];
 
@@ -114,8 +114,9 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                 }
             }
             Console.Clear();
-            Player winner = GetWinner();
-            Writer.AnnounceWinner(winner.Name, winner.BackgroundColor, winner.ForegroundColor);
+
+            PostFinishData();
+            
             Console.ReadKey();
         }
 
@@ -225,6 +226,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                 {
                     players[placement.OwnerID].Money += players[turnCounter].Money;
                     players[turnCounter].Money = 0;
+                    players[turnCounter].FinishedAt = remainingPlayers;
                     remainingPlayers--;
                     PostPlayerStatuses();
                     Writer.WentBankrupt();
@@ -279,9 +281,9 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             return r.Next(1, 7);
         }
         /// <summary>
-        /// Megszerzi a játékban győztes játékos nevét
+        /// Megszerzi a játékban győztes játékost
         /// </summary>
-        /// <returns>string - a játékos neve</returns>
+        /// <returns>Player - a játékos</returns>
         private Player GetWinner()
         {
             Player MaxPlayer = players[0];
@@ -294,6 +296,57 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             }
             return MaxPlayer;            
         }
+
+        private void PostFinishData()
+        {
+
+            int[] FinishedAts = new int[players.Length];
+            Player winner = GetWinner();
+            
+            for (int i = 0; i < players.Length; i++)
+            {
+                if (!players[i].InGame)
+                {
+                    FinishedAts[players[i].FinishedAt-1] = players[i].ID;
+                }
+                else
+                {
+                    if (winner.ID == players[i].ID)
+                    {
+                        FinishedAts[0] = players[i].ID;
+                    }
+                    else
+                    {
+                        FinishedAts[1] = players[i].ID;
+                    }
+                }
+            }
+
+            int[] PlayersFields = GetPlayersFields();
+
+            for (int i = 0; i<FinishedAts.Length; i++)
+            {
+                Player p = players[FinishedAts[i]];
+                
+                Writer.AnnounceFinishers(i+1, p.Name, PlayersFields[p.ID] ,p.BackgroundColor, p.ForegroundColor);
+            }
+
+        }
+
+        private int[] GetPlayersFields()
+        {
+            int[] fieldCounts = new int[players.Length];
+            for (int i = 0; i<fields.Length; i++)
+            {
+                if (fields[i].OwnerID != -1)
+                {
+                    fieldCounts[fields[i].OwnerID]++;
+                }
+            }
+
+            return fieldCounts;
+        }
+
         /// <summary>
         /// Megadja a legkisebb értékű mező értékét.
         /// </summary>
@@ -396,7 +449,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                 }
                 else
                 {
-                    Writer.WritePlayerStatus($"{i + 1}. játékos", $"{players[i].Money} $ (Kiesett)", players[i].BackgroundColor, players[i].ForegroundColor);
+                    Writer.WritePlayerStatus($"{i + 1}. játékos", $"{players[i].Money} $ (Kiesett, {players[i].FinishedAt}. helyezett)", players[i].BackgroundColor, players[i].ForegroundColor);
                 }
             }
             Writer.WriteDivider();
