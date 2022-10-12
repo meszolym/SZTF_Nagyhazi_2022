@@ -25,21 +25,70 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
 
         private int turnCounter;
         private int remainingPlayers;
-        public Game()
+        public Game(Field[] fields, Player[] players)
         {
-            this.fields = null;
-            this.players = new Player[4];
+            this.fields = fields;
+            this.players = players;
             this.turnCounter = 0;
             this.remainingPlayers = players.Length;
         }
 
-        public static Game Parse(string input)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="errorDesc"></param>
+        /// <returns></returns>
+        public static Game Parse(string input, ref string errorDesc)
         {
-            Game game = new Game();
-            
-            //ezt kialakítani az inputreader helyetts
+            string[] inputDivided = input.Split("\r\n");
 
-            return game;
+            ConsoleColor[,] colorSchemas = new ConsoleColor[4, 2]
+{
+                {ConsoleColor.Red,ConsoleColor.White},
+                {ConsoleColor.Blue,ConsoleColor.White},
+                {ConsoleColor.DarkGreen,ConsoleColor.Yellow},
+                {ConsoleColor.White,ConsoleColor.Black}
+    //{backcolor, forecolor}
+};
+
+            Player[] players = new Player[4];
+
+
+            if (!int.TryParse(inputDivided[0], out int startmoney))
+            {
+                errorDesc = "Nem megfelelő kezdőtőke.";
+                return null;
+            }
+            for (int i = 0; i<4; i++)
+            {
+                players[i] = new Player(i, startmoney, colorSchemas[i, 0], colorSchemas[i, 1]);
+            }
+
+            if (!int.TryParse(inputDivided[1], out int numOfFields) || (numOfFields + 1) % 4 != 0 || numOfFields < 7 || numOfFields > 47)
+            {
+                errorDesc = "Nem megfelelő mezőszám.";
+                return null;
+            }
+            numOfFields = numOfFields + 1; // startmezőnek hely
+            Field[] fields = new Field[numOfFields];
+            fields[0] = new Field(0, -1, -1); //startmező
+
+            string[] prices = inputDivided[2].Split(";");
+            for (int i = 1; i < fields.Length; i++)
+            {
+                if (!int.TryParse(prices[i - 1], out int price) || price <= 0)
+                {
+                    errorDesc = $"Nem megfelelő ár a(z) {i}. helyen.";
+                    return null;
+                }
+
+                fields[i] = new Field(i, price, -1);
+            }
+
+            Field.SortAndAssignFields(ref fields);
+
+            return new Game(fields,players);
         }
 
         /// <summary>

@@ -21,8 +21,25 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             path += "./Source/";
             path += Console.ReadLine();
 
-            InputReader inputReader = new InputReader(path);
-            Game game = inputReader.ReadGame();
+            if (!File.Exists(path))
+            {
+                Writer.WriteError("A fájl nem létezik.");
+                Console.ReadKey();
+                Environment.Exit(0);
+            }
+
+            StreamReader sr = new StreamReader(path);
+
+            string errorDesc = String.Empty;
+
+            Game game = Game.Parse(sr.ReadToEnd(), ref errorDesc);
+            if (game == null)
+            {
+                Writer.WriteError(errorDesc);
+                Console.ReadKey();
+                Environment.Exit(0);
+            }
+            sr.Close();
             Writer.WriteDivider();
             Writer.WriteSuccessfulRead();
 

@@ -21,12 +21,12 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         public ConsoleColor bgColor;
         public ConsoleColor fgColor;
 
-        public Player(int id, int money, int placement, bool inGame, ConsoleColor bgColor, ConsoleColor fgColor)
+        public Player(int id, int money, ConsoleColor bgColor, ConsoleColor fgColor)
         {
             ID = id;
             Money = money;
-            PlacementID = placement;
-            this.inGame = inGame;
+            PlacementID = 0;
+            this.inGame = true;
             this.bgColor = bgColor;
             this.fgColor = fgColor;
         }

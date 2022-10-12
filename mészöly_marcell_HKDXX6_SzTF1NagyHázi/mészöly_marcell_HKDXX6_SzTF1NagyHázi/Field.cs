@@ -70,6 +70,52 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         {
             return a.price < b.price;
         }
+
+        /// <summary>
+        /// A mezőket rendezi sorba ár szerint (javított beillesztéses rendezéssel), majd újra kiadja az ID-kat és beállítja a board megjelenítés során használt helyeket.
+        /// </summary> 
+        public static void SortAndAssignFields(ref Field[] fields)
+        {
+            for (int i = 1; i < fields.Length; i++)
+            {
+                int j = i - 1;
+                Field helper = fields[i];
+                while (j > 0 && fields[j] > helper)
+                {
+                    fields[j + 1] = fields[j];
+                    j--;
+                }
+                fields[j + 1] = helper;
+            }
+            int dim = fields.Length / 4;
+            for (int i = 0; i < fields.Length; i++)
+            {
+                fields[i].id = i;
+
+                if (i < dim) //felső sorban lesz
+                {
+                    fields[i].boardPlacementTop = i * Field.Width;
+                    fields[i].boardPlacementTop = 0;
+                }
+                else if (i < dim * 2) //jobb oldali oszlopban lesz
+                {
+                    fields[i].boardPlacementTop = (dim) * Field.Width;
+                    fields[i].boardPlacementTop = Field.Height * (i - dim);
+                }
+                else if (i < dim * 3) //alsó sorban lesz
+                {
+                    fields[i].boardPlacementTop = (dim * 3 - i) * Field.Width;
+                    fields[i].boardPlacementTop = Field.Height * (dim);
+                }
+                else //(i < dim * 4) bal oldali oszlopban lesz
+                {
+                    fields[i].boardPlacementLeft = 0;
+                    fields[i].boardPlacementTop = Field.Height * (dim * 4 - i);
+                }
+            }
+
+        }
+
         /// <summary>
         /// Megadja a mező árát mértékegységgel.
         /// </summary>
