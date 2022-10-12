@@ -175,6 +175,12 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             {
                 Writer.AskBuyQuestion();
                 string buyYesNo = Console.ReadLine();
+                while (buyYesNo != "I" && buyYesNo != "i" && buyYesNo != "N" && buyYesNo != "n")
+                {
+                    Writer.WriteErrorBuyAnswer();
+                    buyYesNo = Console.ReadLine();
+                }
+
                 if (buyYesNo == "I" || buyYesNo == "i")
                 {
                     players[turnCounter].Money -= placement.Price;

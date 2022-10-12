@@ -244,6 +244,14 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         }
 
         /// <summary>
+        /// Tájékoztatja a játékost, hogy a vásárlási szándékot nem megfelelően adta meg, illetve tájékoztatja az újabb bekérésről.
+        /// </summary>
+        internal static void WriteErrorBuyAnswer()
+        {
+            Console.Write("Nem megfelelő válasz. Próbálkozz újra: ");
+        }
+
+        /// <summary>
         /// Tájékoztatja a játékost, hogy az adott mezőt nem tudja megvenni pénz hiányában.
         /// </summary>
         internal static void WriteCannotBuy()
