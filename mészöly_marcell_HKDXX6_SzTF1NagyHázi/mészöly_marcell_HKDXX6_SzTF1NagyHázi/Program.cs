@@ -16,6 +16,21 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
 
             Writer.WriteWelcome();
 
+            Game game = null;
+            readInput(ref game);
+
+            game.Run();
+
+            Environment.Exit(0);
+
+        }
+
+        /// <summary>
+        /// A beolvasás indításáért/lefuttatásáért felel
+        /// </summary>
+        /// <param name="game">Az objektum, amibe írjuk a játékot.</param>
+        private static void readInput(ref Game game)
+        {
             Writer.AskForPath();
             string path = string.Empty;
             path += "./Source/";
@@ -32,21 +47,16 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
 
             string errorDesc = String.Empty;
 
-            Game game = Game.Parse(sr.ReadToEnd(), ref errorDesc);
+            game = Game.Parse(sr.ReadToEnd(), ref errorDesc);
+            sr.Close();
             if (game == null)
             {
                 Writer.WriteError(errorDesc);
                 Console.ReadKey();
                 Environment.Exit(0);
             }
-            sr.Close();
             Writer.WriteDivider();
             Writer.WriteSuccessfulRead();
-
-            game.Run();
-
-            Environment.Exit(0);
-
         }
     }
 }
