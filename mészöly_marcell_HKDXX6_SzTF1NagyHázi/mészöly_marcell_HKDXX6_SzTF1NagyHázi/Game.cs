@@ -114,11 +114,13 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                 }
             }
 
+            int winnerID = GetWinner().ID;
+
             for (int i = 0; i<players.Length; i++)
             {
                 if (players[i].InGame)
                 {
-                    if (players[i].ID != GetWinner().ID)
+                    if (players[i].ID != winnerID)
                     {
                         players[i].Money = 0; //kiléptetés a játékból
                         players[i].FinishedAt = 2;
