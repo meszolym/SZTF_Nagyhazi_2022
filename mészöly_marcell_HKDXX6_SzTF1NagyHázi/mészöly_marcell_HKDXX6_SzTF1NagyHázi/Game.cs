@@ -114,7 +114,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                 }
             }
 
-            int winnerID = GetWinner().ID;
+            int winnerID = GetWinnerID();
 
             for (int i = 0; i<players.Length; i++)
             {
@@ -301,10 +301,10 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             return r.Next(1, 7);
         }
         /// <summary>
-        /// Megszerzi a játékban győztes játékost
+        /// Megszerzi a játékban győztes játékos ID-ját.
         /// </summary>
-        /// <returns>Player - a játékos</returns>
-        private Player GetWinner()
+        /// <returns>int - a játékos ID-ja</returns>
+        private int GetWinnerID()
         {
             Player MaxPlayer = players[0];
             for (int i = 0; i < players.Length; i++)
@@ -314,9 +314,11 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                     MaxPlayer = players[i];
                 }
             }
-            return MaxPlayer;            
+            return MaxPlayer.ID;            
         }
-
+        /// <summary>
+        /// Átadja a helyezésadatokat a UI író felé kiírásra
+        /// </summary>
         private void PostRankingData()
         {
 
