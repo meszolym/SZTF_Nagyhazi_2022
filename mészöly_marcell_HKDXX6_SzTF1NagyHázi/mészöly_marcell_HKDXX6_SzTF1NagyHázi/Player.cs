@@ -61,11 +61,10 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         }
 
         /// <summary>
-        /// Előrelépteti a játékost, és visszaadja, hogy hová lépett.
+        /// Előrelépteti a játékost, egy dobott értékkel.
         /// </summary>
         /// <param name="rolled">A megtenni kívánt lépések száma</param>
-        /// <param name="fields">A mezőket tartalmazó tömb</param>
-        /// <returns>Field - A mező, ahova a játékos érkezett</returns>
+        /// <param name="FieldsMax">A mezőket tartalmazó tömb mérete</param>
         public void StepForward(int rolled, int FieldsMax)
         {
             placementID += rolled;

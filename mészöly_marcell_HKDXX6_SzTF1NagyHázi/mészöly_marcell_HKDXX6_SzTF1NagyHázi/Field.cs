@@ -17,7 +17,6 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         {
             get { return id; }
         }
-
         public string Name
         {
             get
@@ -31,7 +30,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         }
 
         private readonly int price;
-
+        
         public int Price
         {
             get { return price; }
