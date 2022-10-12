@@ -94,17 +94,17 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
 
                 if (i < dim) //felső sorban lesz
                 {
-                    fields[i].boardPlacementTop = i * Field.Width;
+                    fields[i].boardPlacementLeft = i * Field.Width;
                     fields[i].boardPlacementTop = 0;
                 }
                 else if (i < dim * 2) //jobb oldali oszlopban lesz
                 {
-                    fields[i].boardPlacementTop = (dim) * Field.Width;
+                    fields[i].boardPlacementLeft = (dim) * Field.Width;
                     fields[i].boardPlacementTop = Field.Height * (i - dim);
                 }
                 else if (i < dim * 3) //alsó sorban lesz
                 {
-                    fields[i].boardPlacementTop = (dim * 3 - i) * Field.Width;
+                    fields[i].boardPlacementLeft = (dim * 3 - i) * Field.Width;
                     fields[i].boardPlacementTop = Field.Height * (dim);
                 }
                 else //(i < dim * 4) bal oldali oszlopban lesz

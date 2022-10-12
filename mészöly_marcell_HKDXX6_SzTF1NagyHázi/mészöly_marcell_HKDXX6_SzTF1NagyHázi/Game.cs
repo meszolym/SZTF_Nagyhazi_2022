@@ -34,11 +34,11 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         }
 
         /// <summary>
-        /// 
+        /// Egy szövegből Game objektumot készít, ha az megfelel.
         /// </summary>
-        /// <param name="input"></param>
-        /// <param name="errorDesc"></param>
-        /// <returns></returns>
+        /// <param name="input">A bemeneti szöveg, ami tartalmazza a Game adatait a ReadMe szerint</param>
+        /// <param name="errorDesc">Az esetleges hibákat nyilvántartó string</param>
+        /// <returns>null - Ha hibába ütközik az olvasás, Game - ha az olvasás hiba nélkül lefut.</returns>
         public static Game Parse(string input, ref string errorDesc)
         {
             string[] inputDivided = input.Split("\r\n");
@@ -70,7 +70,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                 errorDesc = "Nem megfelelő mezőszám.";
                 return null;
             }
-            numOfFields = numOfFields + 1; // startmezőnek hely
+            numOfFields++; // startmezőnek hely
             Field[] fields = new Field[numOfFields];
             fields[0] = new Field(0, -1, -1); //startmező
 
