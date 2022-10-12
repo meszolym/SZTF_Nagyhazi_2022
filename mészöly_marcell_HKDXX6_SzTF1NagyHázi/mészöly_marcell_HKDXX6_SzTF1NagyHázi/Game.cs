@@ -134,7 +134,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             Console.Clear();
 
             PostRankingData();
-            
+            Writer.AnnounceEnd();
             Console.ReadKey();
         }
 
