@@ -30,7 +30,7 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                     money = value;
                     if (money <= 0)
                     {
-                        InGame = false;
+                        inGame = false;
                     }
                 }
                     
@@ -43,10 +43,21 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         public bool InGame
         {
             get { return inGame; }
-            private set
-            {
-                if (Money <= 0)
-                { inGame = value; }
+            set { 
+                if (value == false)
+                {
+                    if (Money <= 0)
+                    {
+                        inGame = value;
+                    }
+                }
+                else
+                {
+                    if (Money>0)
+                    {
+                        inGame = value;
+                    }
+                }
             }
         }
 
