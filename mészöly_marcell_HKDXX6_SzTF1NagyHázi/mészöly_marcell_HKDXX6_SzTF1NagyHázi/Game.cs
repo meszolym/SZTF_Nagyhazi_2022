@@ -122,12 +122,12 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                 {
                     if (players[i].ID != winnerID)
                     {
-                        players[i].Money = 0; //kiléptetés a játékból (InGame = false redundáns lenne!)
+                        players[i].Money = 0; //kiléptetés a játékból (InGame)
                         players[i].FinishedAt = 2;
                     }
                     else
                     {
-                        players[i].Money = 0; //kiléptetés a játékból (InGame = false redundáns lenne!)
+                        players[i].Money = 0; //kiléptetés a játékból (InGame = false)
                         players[i].FinishedAt = 1;
                     }
                 }
