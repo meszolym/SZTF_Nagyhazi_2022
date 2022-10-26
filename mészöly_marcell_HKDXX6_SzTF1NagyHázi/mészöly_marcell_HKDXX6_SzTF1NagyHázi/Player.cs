@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
 {
@@ -25,48 +26,28 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         { 
             get { return money; } 
             set {
-                if (inGame)
+                if (money > 0)
                 {
                     money = value;
-                    if (money <= 0)
-                    {
-                        inGame = false;
-                    }
                 }
                     
             }
         }
 
-        private int placementID;
-        public int PlacementID { get { return placementID; } }
-        private bool inGame;
         public bool InGame
         {
-            get { return inGame; }
-            set { 
-                if (value == false)
-                {
-                    if (Money <= 0)
-                    {
-                        inGame = value;
-                    }
-                }
-                else
-                {
-                    if (Money>0)
-                    {
-                        inGame = value;
-                    }
-                }
-            }
+            get { return money > 0; }
         }
+
+        private int placementID;
+        public int PlacementID { get { return placementID; } }
 
         private int finishedAt;
         public int FinishedAt
         {
             get { return finishedAt; }
             set { 
-                if (!inGame)
+                if (!InGame)
                 {
                     finishedAt = value;
                 }
@@ -80,7 +61,6 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         public Player(int id, int money, ConsoleColor bgColor, ConsoleColor fgColor)
         {
             this.id = id;
-            this.inGame = true;
             Money = money;
             placementID = 0;
             this.bgColor = bgColor;
