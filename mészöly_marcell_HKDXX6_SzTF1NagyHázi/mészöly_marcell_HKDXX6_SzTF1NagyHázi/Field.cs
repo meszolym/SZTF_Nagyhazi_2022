@@ -56,7 +56,10 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
 
         public int OwnerID { get { return ownerID; } private set { ownerID = value; } }
 
-        public string Flag { get {
+        public string Flag 
+        { 
+            get 
+            {
                 if (ID == 0)
                 {
                     return "S";
@@ -66,6 +69,22 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
                     return $"{ID}🏨";
                 }
                 return ID.ToString();
+            }
+        }
+
+        public string TopRow
+        {
+            get
+            {
+                if (Flag.Length == 1)
+                {
+                    return $"┌─────┤";
+                }
+                if (Flag.Length == 2)
+                {
+                    return $"┌────┤";
+                }
+                return $"┌───┤";
             }
         }
 
@@ -152,22 +171,6 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
 
         }
 
-        /// <summary>
-        /// Megadja a mező kiírásakor használandó felső border sort, a flag nélkül.
-        /// </summary>
-        /// <returns>String - A mező felső border sora</returns>
-        public string GetTop()
-        {
-            if (Flag.Length == 1)
-            {
-                return $"┌─────┤";
-            }
-            if (Flag.Length == 2)
-            {
-                return $"┌────┤";
-            }
-            return $"┌───┤";
-        }
         /// <summary>
         /// Megadja azoknak a játékosoknak az ID-ját, amelyek az adott mezőn állnak.
         /// </summary>

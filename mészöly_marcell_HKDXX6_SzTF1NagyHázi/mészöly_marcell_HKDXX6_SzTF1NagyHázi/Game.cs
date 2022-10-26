@@ -407,11 +407,11 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
             {
                 if (fields[i].OwnerID != -1)
                 {
-                    Writer.WriteFieldToBoard(fields[i].GetTop(), fields[i].Flag, players[fields[i].OwnerID].BackgroundColor, players[fields[i].OwnerID].ForegroundColor, fields[i].BoardPlacementLeft, fields[i].BoardPlacementTop);
+                    Writer.WriteFieldToBoard(fields[i].TopRow, fields[i].Flag, players[fields[i].OwnerID].BackgroundColor, players[fields[i].OwnerID].ForegroundColor, fields[i].BoardPlacementLeft, fields[i].BoardPlacementTop);
                 }
                 else
                 {
-                    Writer.WriteFieldToBoard(fields[i].GetTop(), fields[i].Flag,Writer.BaseBgColor,Writer.BaseFgColor, fields[i].BoardPlacementLeft, fields[i].BoardPlacementTop);
+                    Writer.WriteFieldToBoard(fields[i].TopRow, fields[i].Flag,Writer.BaseBgColor,Writer.BaseFgColor, fields[i].BoardPlacementLeft, fields[i].BoardPlacementTop);
                 }
                 Player[] OnField = fields[i].GetPlayersOnField(ref players);
                 for (int j = 0; j < OnField.Length; j++)
