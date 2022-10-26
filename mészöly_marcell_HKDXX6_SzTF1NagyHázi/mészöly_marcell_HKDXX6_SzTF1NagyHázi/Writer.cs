@@ -8,8 +8,11 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
 {
     public class Writer
     {
-        static public ConsoleColor BaseBgColor;
-        static public ConsoleColor BaseFgColor;
+        private static ConsoleColor baseBgColor;
+        public static ConsoleColor BaseBgColor { get => baseBgColor; set => baseBgColor = value; }
+
+        private static ConsoleColor baseFgColor;
+        public static ConsoleColor BaseFgColor { get => baseFgColor; set => baseFgColor = value; }
 
         #region indítás és fájlbeolvasás
         /// <summary>
