@@ -309,7 +309,6 @@ namespace mészöly_marcell_HKDXX6_SzTF1NagyHázi
         /// <summary>
         /// Tájékoztatja a játékost, hogy csődbe ment.
         /// </summary>
-        /// 
         public static void WentBankrupt()
         {
             Console.WriteLine("📉 Erre sajnos nem volt elég pénzed, így csődbe mentél.");
