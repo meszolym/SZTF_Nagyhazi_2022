@@ -4,8 +4,9 @@ A 2022-es Szoftvertervezés és -fejlsztés I. nagyházim. :)
 
 
 # Feladat
-## Monopoly
-A következő egyszerűsített Monopoly játékot 4 játékos játszhatja. A játéktér minden mezejének van értéke, lehet tulajdonosa, és a játékosok szállodát építhetnek rájuk.
-A játékosok felváltva dobhatnak egy dobókockával, a rajta lévő számnak megfelelő mezőnyit kell a bábujukkal előrelépni. Ha a bábu olyan mezőre érkezik, amelyen még nem áll szálloda, a játékos megépítheti a mező értékének megfelelő összegért. Ezzel a mező a játékos tulajdonába kerül. Ha a bábu egy idegen tulajdonban lévő mezőre érkezik, akkor a mező értékének megfelelő összeget ki kell fizetnie a mező tulajdonosának. Ha a bábu körbeért a játéktéren (áthalad a startmezőn), a legolcsóbb mező értékének megfelelő jutalmat kap.
-Minden játékos azonos pénzösszeggel indul. Aki elköltötte az összes pénzét, lekerül a tábláról és elveszíti a játékot. Az nyer, akinek a második csőd (a második kiesett játékos) után több pénze maradt.
-A játék kezdete előtt a paramétereket (kezdeti pénzösszeg, mezők száma és értéke) a program egy szövegfájlból olvassa be.
+### Monopoly
+<p>A k&ouml;vetkező egyszerűs&iacute;tett Monopoly j&aacute;t&eacute;kot 4 j&aacute;t&eacute;kos j&aacute;tszhatja. A j&aacute;t&eacute;kt&eacute;r minden mezej&eacute;nek van &eacute;rt&eacute;ke, lehet tulajdonosa, &eacute;s a j&aacute;t&eacute;kosok sz&aacute;llod&aacute;t &eacute;p&iacute;thetnek r&aacute;juk.<br />
+A j&aacute;t&eacute;kosok felv&aacute;ltva dobhatnak egy dob&oacute;kock&aacute;val, a rajta l&eacute;vő sz&aacute;mnak megfelelő mezőnyit kell a b&aacute;bujukkal előrel&eacute;pni. Ha a b&aacute;bu olyan mezőre &eacute;rkezik, amelyen m&eacute;g nem &aacute;ll sz&aacute;lloda, a j&aacute;t&eacute;kos meg&eacute;p&iacute;theti a mező &eacute;rt&eacute;k&eacute;nek megfelelő &ouml;sszeg&eacute;rt. Ezzel a mező a j&aacute;t&eacute;kos tulajdon&aacute;ba ker&uuml;l. Ha a b&aacute;bu egy idegen tulajdonban l&eacute;vő mezőre &eacute;rkezik, akkor a mező &eacute;rt&eacute;k&eacute;nek megfelelő &ouml;sszeget ki kell fizetnie a mező tulajdonos&aacute;nak. Ha a b&aacute;bu k&ouml;rbe&eacute;rt a j&aacute;t&eacute;kt&eacute;ren (&aacute;thalad a startmezőn), a legolcs&oacute;bb mező &eacute;rt&eacute;k&eacute;nek megfelelő jutalmat kap.<br />
+Minden j&aacute;t&eacute;kos azonos p&eacute;nz&ouml;sszeggel indul. Aki elk&ouml;lt&ouml;tte az &ouml;sszes p&eacute;nz&eacute;t, leker&uuml;l a t&aacute;bl&aacute;r&oacute;l &eacute;s elvesz&iacute;ti a j&aacute;t&eacute;kot. Az nyer, akinek a m&aacute;sodik csőd (a m&aacute;sodik kiesett j&aacute;t&eacute;kos) ut&aacute;n t&ouml;bb p&eacute;nze maradt.<br />
+A j&aacute;t&eacute;k kezdete előtt a param&eacute;tereket (kezdeti p&eacute;nz&ouml;sszeg, mezők sz&aacute;ma &eacute;s &eacute;rt&eacute;ke) a program egy sz&ouml;vegf&aacute;jlb&oacute;l olvassa be.<br />
+&nbsp;</p>
